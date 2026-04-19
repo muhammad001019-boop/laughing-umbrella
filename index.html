@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MasterClass Teks Eksplanasi | Pembelajaran Interaktif</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === VARIABEL TEMA (LIGHT & DARK MODE) === */
+        :root[data-theme="light"] {
+            --bg-color: #f4f7f6;
+            --surface-color: #ffffff;
+            --text-main: #2d3436;
+            --text-muted: #636e72;
+            --primary: #0984e3;
+            --primary-hover: #74b9ff;
+            --secondary: #00cec9;
+            --accent: #fdcb6e;
+            --border: #dfe6e9;
+            --shadow: 0 10px 30px rgba(0,0,0,0.05);
+            --correct: #27ae60;
+            --wrong: #e74c3c;
+        }
+
+        :root[data-theme="dark"] {
+            --bg-color: #1e272e;
+            --surface-color: #2d3436;
+            --text-main: #f5f6fa;
+            --text-muted: #dcdde1;
+            --primary: #74b9ff;
+            --primary-hover: #0984e3;
+            --secondary: #81ecec;
+            --accent: #ffeaa7;
+            --border: #4b6584;
+            --shadow: 0 10px 30px rgba(0,0,0,0.3);
+            --correct: #2ecc71;
+            --wrong: #ff7675;
+        }
+
+        /* === RESET & BASE STYLES === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Merriweather', serif;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+        /* === PROGRESS BAR === */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: transparent;
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+        }
+
+        /* === NAVBAR === */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--surface-color);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            z-index: 999;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .theme-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* === HERO SECTION === */
+        header {
+            padding: 10rem 5% 5rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(9, 132, 227, 0.1), rgba(0, 206, 201, 0.1));
+            border-bottom: 1px solid var(--border);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn-start {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(9, 132, 227, 0.4);
+        }
+
+        .btn-start:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        /* === MAIN CONTENT === */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 5%;
+        }
+
+        section {
+            background-color: var(--surface-color);
+            padding: 3rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 100px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s easeOut, transform 0.8s easeOut;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .highlight {
+            background-color: rgba(9, 132, 227, 0.1);
+            border-left: 5px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* === ACCORDION (INTERACTIVE EXAMPLES) === */
+        .accordion {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 1.5rem;
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        .active-accordion, .accordion:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .accordion:after {
+            content: '\002B'; /* Unicode plus sign */
+            font-size: 1.5rem;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active-accordion:after {
+            content: "\2212"; /* Unicode minus sign */
+        }
+
+        .panel {
+            padding: 0 1.5rem;
+            background-color: var(--surface-color);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .panel p {
+            margin: 1.5rem 0;
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--accent);
+            color: #2d3436;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* === QUIZ SECTION === */
+        .quiz-container {
+            background-color: var(--bg-color);
+            padding: 2rem;
+            border-radius: 10px;
+            border: 2px dashed var(--primary);
+        }
+
+        .question {
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .options {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .options li {
+            background: var(--surface-color);
+            margin-bottom: 0.5rem;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .options li:hover {
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .options li.selected {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        #submit-quiz {
+            margin-top: 1.5rem;
+            background-color: var(--secondary);
+            color: #2d3436;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        #quiz-result {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        /* === FOOTER & BACK TO TOP === */
+        footer {
+            text-align: center;
+            padding: 3rem;
+            background-color: var(--surface-color);
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border: none;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* Disembunyikan di mobile untuk kesederhanaan */
+            }
+            header h1 {
+                font-size: 2.5rem;
+            }
+            section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="myBar"></div>
+    </div>
+
+    <nav>
+        <a href="#" class="logo">Edukasi<span style="color: var(--secondary);">Pro</span></a>
+        <ul class="nav-links">
+            <li><a href="#materi">Materi</a></li>
+            <li><a href="#struktur">Struktur & Kaidah</a></li>
+            <li><a href="#contoh">Contoh</a></li>
+            <li><a href="#kuis">Kuis Interaktif</a></li>
+        </ul>
+        <button class="theme-btn" onclick="toggleTheme()">🌙 Dark Mode</button>
+    </nav>
+
+    <header>
+        <h1>Menguasai Teks Eksplanasi</h1>
+        <p>Pelajari secara mendalam bagaimana fenomena alam dan sosial dijelaskan melalui teks yang logis, faktual, dan terstruktur. Cocok untuk siswa SMP, SMA, dan penggiat literasi.</p>
+        <a href="#materi" class="btn-start">Mulai Belajar Sekarang ↓</a>
+    </header>
+
+    <main>
+        
+        <section id="materi" class="scroll-anim">
+            <h2>1. Apa Itu Teks Eksplanasi?</h2>
+            <p><strong>Teks Eksplanasi</strong> adalah teks yang memuat penjelasan tentang proses terjadinya suatu fenomena. Fenomena tersebut bisa berupa fenomena alam (seperti gempa bumi, pelangi, tsunami) maupun fenomena sosial, ilmu pengetahuan, dan budaya (seperti kemiskinan, pengangguran, proses terjadinya internet).</p>
+            
+            <div class="highlight">
+                <p><strong>Fokus Utama:</strong> Teks ini menjawab pertanyaan <strong>"Mengapa"</strong> (menyatakan sebab-akibat) dan <strong>"Bagaimana"</strong> (menyatakan proses/urutan waktu) suatu peristiwa bisa terjadi.</p>
+            </div>
+
+            <h3>Ciri-Ciri Karakteristik:</h3>
+            <ul>
+                <li><strong>Faktual:</strong> Informasi yang disampaikan berdasarkan fakta dan data nyata, bukan karangan fiktif.</li>
+                <li><strong>Keilmuan (Ilmiah):</strong> Membahas fenomena yang berhubungan dengan ilmu pengetahuan (sains).</li>
+                <li><strong>Informatif & Objektif:</strong> Bertujuan memberikan wawasan tanpa berusaha memengaruhi opini atau mengajak pembaca untuk melakukan sesuatu (berbeda dengan teks persuasi).</li>
+                <li><strong>Generik:</strong> Fokus pada hal umum (contoh: hujan), bukan partisipan manusia (bukan: hujannya Pak Budi).</li>
+            </ul>
+        </section>
+
+        <section id="struktur" class="scroll-anim">
+            <h2>2. Struktur dan Kaidah Kebahasaan</h2>
+            <p>Teks eksplanasi dibangun atas kerangka yang sistematis agar alur pemikirannya mudah dipahami.</p>
+            
+            <h3>Struktur Teks:</h3>
+            <ol>
+                <li><strong>Pernyataan Umum (General Statement):</strong> <br>Bagian pembuka yang berisi gambaran umum atau definisi tentang fenomena yang dibahas. <em>(Contoh: Tsunami adalah gelombang laut besar yang...).</em></li>
+                <li><strong>Deretan Penjelas (Sebab-Akibat / Sequence of Explanation):</strong> <br>Ini adalah inti dari teks. Berisi rincian proses terjadinya fenomena secara mendalam dan bertahap dari awal hingga akhir.</li>
+                <li><strong>Interpretasi (Opsional):</strong> <br>Bagian penutup berupa simpulan atau tanggapan/pandangan penulis terhadap fenomena tersebut.</li>
+            </ol>
+
+            <div class="highlight">
+                <h3>Kaidah Kebahasaan (Linguistic Features):</h3>
+                <ul>
+                    <li>Menggunakan <strong>Konjungsi Kausalitas</strong> (Sebab-akibat): <em>sebab, karena, oleh sebab itu, oleh karena itu, sehingga.</em></li>
+                    <li>Menggunakan <strong>Konjungsi Kronologis</strong> (Hubungan waktu): <em>kemudian, lalu, setelah itu, pada akhirnya.</em></li>
+                    <li>Banyak menggunakan <strong>Kata Kerja Material</strong> (menunjukkan perbuatan fisik) dan <strong>Relasional</strong> (menunjukkan hubungan sebab-akibat).</li>
+                    <li>Sering menggunakan <strong>Istilah Ilmiah</strong> (teknis): <em>tektonik, evaporasi, kondensasi, stratifikasi sosial.</em></li>
+                    <li>Cenderung menggunakan <strong>Kalimat Pasif</strong>: <em>dilihat, dimulai, dibentuk.</em></li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="jenis" class="scroll-anim">
+            <h2>3. Jenis-jenis Teks Eksplanasi</h2>
+            <p>Menurut literatur akademik, teks eksplanasi dibagi menjadi empat kategori utama:</p>
+            <ul>
+                <li><strong>Eksplanasi Sequential (Berurutan):</strong> Menjelaskan rincian tahapan suatu fenomena (Contoh: Siklus rantai makanan, metamorfosis kupu-kupu).</li>
+                <li><strong>Eksplanasi Kausal (Sebab-Akibat):</strong> Menjelaskan penyebab atau asal-muasal terjadinya perubahan secara bertahap (Contoh: Proses terjadinya tanah longsor).</li>
+                <li><strong>Eksplanasi Teoritis:</strong> Memuat spekulasi kemungkinan yang bisa terjadi di balik fenomena (Contoh: Prediksi dampak pemanasan global 50 tahun ke depan).</li>
+                <li><strong>Eksplanasi Faktorial:</strong> Menjelaskan efek dan hasil dari suatu proses (Contoh: Dampak penjajahan terhadap budaya lokal).</li>
+            </ul>
+        </section>
+
+        <section id="contoh" class="scroll-anim">
+            <h2>4. Bedah Contoh Teks Eksplanasi</h2>
+            <p>Klik judul di bawah ini untuk melihat teks beserta analisis strukturnya.</p>
+
+            <button class="accordion">Fenomena Alam: Terjadinya Gerhana Bulan</button>
+            <div class="panel">
+                <br>
+                <span class="badge">Pernyataan Umum</span>
+                <p>Gerhana bulan adalah salah satu fenomena alam yang sering kita jumpai. Peristiwa alam ini terjadi ketika bulan beroposisi dengan matahari. Namun, oposisi bulan dengan matahari tidak akan selamanya menghasilkan peristiwa gerhana bulan.</p>
+                
+                <span class="badge">Deretan Penjelas</span>
+                <p>Gerhana bulan terjadi apabila sebagian atau keseluruhan penampang bulan tertutup oleh bayangan bumi. Hal itu terjadi bila bumi berada di antara matahari dan bulan pada satu garis lurus yang sama, sehingga sinar matahari tidak dapat mencapai bulan karena terhalangi oleh bumi. Sebenarnya, pada peristiwa gerhana bulan, seringkali bulan masih dapat terlihat. Ini dikarenakan masih adanya sinar matahari yang dibelokkan ke arah bulan oleh atmosfer bumi. Sinar yang dibelokkan tersebut memiliki spektrum cahaya kemerahan.</p>
+                
+                <span class="badge">Interpretasi</span>
+                <p>Itulah sebabnya mengapa saat gerhana bulan, bulan akan tampak berwarna gelap, bisa berwarna merah tembaga, jingga, atau pun coklat. Fenomena ini sangat aman untuk dilihat dengan mata telanjang tanpa memerlukan kacamata khusus.</p>
+                <br>
+            </div>
+
+            <button class="accordion">Fenomena Sosial: Pengangguran</button>
+            <div class="panel">
+                <br>
+                <span class="badge">Pernyataan Umum</span>
+                <p>Pengangguran merupakan salah satu fenomena sosial yang berkaitan dengan aspek ketenagakerjaan yang menjadi masalah di masyarakat. Secara umum, pengangguran diartikan sebagai orang dewasa yang tidak bekerja dan sedang mencari pekerjaan, atau tidak memiliki pekerjaan secara formal dan tidak mendapatkan penghasilan.</p>
+                
+                <span class="badge">Deretan Penjelas</span>
+                <p>Ada beberapa faktor pendasar yang menjadi penyebab terjadinya pengangguran. Pertama, kesenjangan antara lapangan pekerjaan dan jumlah pencari kerja. Jumlah lulusan sekolah maupun sarjana setiap tahunnya terus meningkat, namun tidak diimbangi dengan pembukaan lapangan kerja baru yang memadai. Kedua, kurangnya keterampilan yang dimiliki oleh para pencari kerja. Banyak perusahaan menerapkan standar tinggi, namun pelamar tidak memiliki keahlian atau kompetensi yang sesuai dengan kriteria yang diminta.</p>
+                
+                <span class="badge">Interpretasi</span>
+                <p>Pengangguran adalah masalah sistemik yang dampaknya sangat luas, mulai dari meningkatnya angka kemiskinan hingga memicu tindak kriminalitas. Oleh karena itu, diperlukan sinergi antara pemerintah melalui penyediaan lapangan kerja, dan masyarakat melalui peningkatan keterampilan (skill) untuk mengatasinya.</p>
+                <br>
+            </div>
+        </section>
+
+        <section id="kuis" class="scroll-anim">
+            <h2>5. Kuis Uji Pemahaman</h2>
+            <p>Mari uji pengetahuan Anda tentang materi yang telah dipelajari.</p>
+            
+            <div class="quiz-container">
+                <div id="quiz-content">
+                    <div class="quiz-item" data-q="1">
+                        <p class="question">1. Bagian teks eksplanasi yang berisi penjelasan detail tentang bagaimana suatu fenomena terjadi disebut...</p>
+                        <ul class="options">
+                            <li data-val="a">A. Pernyataan Umum</li>
+                            <li data-val="b" data-correct="true">B. Deretan Penjelas</li>
+                            <li data-val="c">C. Interpretasi</li>
+                            <li data-val="d">D. Koda</li>
+                        </ul>
+                    </div>
+
+                    <div class="quiz-item" data-q="2">
+                        <p class="question">2. "Oleh karena itu, gempa bumi tektonik dianggap sangat berbahaya." Kata yang digarisbawahi merupakan contoh kaidah kebahasaan berupa...</p>
+                        <ul class="options">
+                            <li data-val="a">A. Konjungsi waktu/kronologis</li>
+                            <li data-val="b" data-correct="true">B. Konjungsi kausalitas/sebab-akibat</li>
+                            <li data-val="c">C. Kata kerja material</li>
+                            <li data-val="d">D. Kalimat pasif</li>
+                        </ul>
+                    </div>
+
+                    <div class="quiz-item" data-q="3">
+                        <p class="question">3. Sifat utama dari teks eksplanasi adalah...</p>
+                        <ul class="options">
+                            <li data-val="a">A. Subjektif dan mengajak</li>
+                            <li data-val="b">B. Fiktif dan menghibur</li>
+                            <li data-val="c" data-correct="true">C. Objektif dan faktual</li>
+                            <li data-val="d">D. Penuh dengan majas</li>
+                        </ul>
+                    </div>
+
+                    <button id="submit-quiz">Cek Nilai Saya</button>
+                </div>
+                <div id="quiz-result"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <h2>EdukasiPro</h2>
+        <p>&copy; 2026 Dibangun menggunakan HTML, CSS, dan Vanilla JS murni. Tanpa framework eksternal.</p>
+    </footer>
+
+    <button id="back-to-top" onclick="scrollToTop()">↑</button>
+
+    <script>
+        // 1. Reading Progress Bar
+        window.onscroll = function() {
+            scrollFunction();
+            progressFunction();
+        };
+
+        function progressFunction() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
+        }
+
+        // 2. Back to Top Button Logic
+        function scrollFunction() {
+            let topBtn = document.getElementById("back-to-top");
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                topBtn.style.display = "flex";
+            } else {
+                topBtn.style.display = "none";
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // 3. Dark/Light Mode Toggle
+        function toggleTheme() {
+            const htmlTag = document.documentElement;
+            const themeBtn = document.querySelector('.theme-btn');
+            
+            if (htmlTag.getAttribute('data-theme') === 'light') {
+                htmlTag.setAttribute('data-theme', 'dark');
+                themeBtn.textContent = '☀️ Light Mode';
+                themeBtn.style.backgroundColor = '#f1c40f'; // Yellowish for sun
+                themeBtn.style.color = '#2d3436';
+            } else {
+                htmlTag.setAttribute('data-theme', 'light');
+                themeBtn.textContent = '🌙 Dark Mode';
+                themeBtn.style.backgroundColor = 'var(--primary)';
+                themeBtn.style.color = 'white';
+            }
+        }
+
+        // 4. Scroll Fade-In Animation (Intersection Observer)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.scroll-anim').forEach(section => {
+            observer.observe(section);
+        });
+
+        // 5. Accordion Logic for Examples
+        var acc = document.getElementsByClassName("accordion");
+        for (let i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active-accordion");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+
+        // 6. Interactive Quiz Logic
+        const quizItems = document.querySelectorAll('.quiz-item');
+        
+        // Select option logic
+        quizItems.forEach(item => {
+            const options = item.querySelectorAll('.options li');
+            options.forEach(opt => {
+                opt.addEventListener('click', () => {
+                    // Remove selected from siblings
+                    options.forEach(o => o.classList.remove('selected'));
+                    // Add selected to clicked
+                    opt.classList.add('selected');
+                });
+            });
+        });
+
+        // Submit Quiz
+        document.getElementById('submit-quiz').addEventListener('click', () => {
+            let score = 0;
+            let answered = 0;
+            const totalQuestions = quizItems.length;
+
+            quizItems.forEach(item => {
+                const selected = item.querySelector('li.selected');
+                if (selected) {
+                    answered++;
+                    if (selected.getAttribute('data-correct') === 'true') {
+                        score++;
+                        selected.style.backgroundColor = 'var(--correct)';
+                        selected.style.borderColor = 'var(--correct)';
+                        selected.style.color = 'white';
+                    } else {
+                        selected.style.backgroundColor = 'var(--wrong)';
+                        selected.style.borderColor = 'var(--wrong)';
+                        selected.style.color = 'white';
+                        
+                        // Show the correct one
+                        const correct = item.querySelector('li[data-correct="true"]');
+                        correct.style.border = '2px solid var(--correct)';
+                    }
+                }
+            });
+
+            const resultDiv = document.getElementById('quiz-result');
+            resultDiv.style.display = 'block';
+
+            if (answered < totalQuestions) {
+                resultDiv.innerHTML = "⚠️ Harap jawab semua pertanyaan terlebih dahulu!";
+                resultDiv.style.backgroundColor = "var(--accent)";
+                resultDiv.style.color = "#2d3436";
+            } else {
+                let percentage = Math.round((score / totalQuestions) * 100);
+                if (percentage === 100) {
+                    resultDiv.innerHTML = `🎉 Sempurna! Skor Anda: ${percentage}/100. Anda sudah menguasai Teks Eksplanasi!`;
+                    resultDiv.style.backgroundColor = "var(--correct)";
+                    resultDiv.style.color = "white";
+                } else if (percentage >= 60) {
+                    resultDiv.innerHTML = `👍 Bagus! Skor Anda: ${percentage}/100. Terus tingkatkan belajar Anda.`;
+                    resultDiv.style.backgroundColor = "var(--primary)";
+                    resultDiv.style.color = "white";
+                } else {
+                    resultDiv.innerHTML = `📚 Skor Anda: ${percentage}/100. Mari baca kembali materinya di atas.`;
+                    resultDiv.style.backgroundColor = "var(--wrong)";
+                    resultDiv.style.color = "white";
+                }
+                
+                // Disable further clicks
+                document.getElementById('submit-quiz').style.display = 'none';
+                document.querySelectorAll('.options li').forEach(li => {
+                    li.style.pointerEvents = 'none';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
