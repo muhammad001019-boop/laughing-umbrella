@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fenomena Hujan – UST Yogyakarta</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0d1b2a;
+      --sky: #1e6091;
+      --rain: #4fc3f7;
+      --mist: #b3e5fc;
+      --cloud: #ecf4fb;
+      --gold: #f0b429;
+      --white: #f8fbff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── RAIN CANVAS ── */
+    #rain-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 3rem;
+      background: rgba(13, 27, 42, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(79, 195, 247, 0.15);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--rain);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-logo span { color: var(--gold); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      color: var(--mist);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color .25s;
+    }
+
+    nav ul a:hover { color: var(--rain); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 60%, rgba(30,96,145,0.45) 0%, transparent 70%);
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(79,195,247,0.12);
+      border: 1px solid rgba(79,195,247,0.35);
+      color: var(--rain);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: .4rem 1.2rem;
+      border-radius: 999px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp .8s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      animation: fadeUp .9s .1s ease both;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--rain);
+    }
+
+    .hero-sub {
+      max-width: 560px;
+      margin: 1.5rem auto 0;
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--mist);
+      line-height: 1.7;
+      animation: fadeUp 1s .2s ease both;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .4rem;
+      font-size: .7rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(179,229,252,0.5);
+      animation: fadeUp 1.2s .5s ease both;
+    }
+
+    .scroll-hint .arrow {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, transparent, var(--rain));
+      animation: scrollPulse 2s infinite;
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-label {
+      font-size: .7rem;
+      font-weight: 500;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--rain);
+      margin-bottom: .75rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── WHAT IS RAIN ── */
+    .what-rain {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .what-rain .text p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: rgba(248,251,255,0.75);
+      margin-bottom: 1rem;
+    }
+
+    .rain-visual {
+      position: relative;
+      height: 340px;
+      background: linear-gradient(160deg, rgba(30,96,145,0.3) 0%, rgba(13,27,42,0.5) 100%);
+      border: 1px solid rgba(79,195,247,0.2);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 1.5rem;
+    }
+
+    .rain-visual::before {
+      content: '🌧';
+      font-size: 7rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      filter: drop-shadow(0 0 40px rgba(79,195,247,0.4));
+    }
+
+    .rain-label-badge {
+      background: rgba(79,195,247,0.12);
+      border: 1px solid rgba(79,195,247,0.3);
+      color: var(--mist);
+      font-size: .8rem;
+      padding: .4rem 1rem;
+      border-radius: 8px;
+      backdrop-filter: blur(6px);
+    }
+
+    /* ── SIKLUS ── */
+    .siklus {
+      background: rgba(255,255,255,0.03);
+      border-top: 1px solid rgba(79,195,247,0.1);
+      border-bottom: 1px solid rgba(79,195,247,0.1);
+      padding: 6rem 2rem;
+    }
+
+    .siklus-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .siklus-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .step-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(79,195,247,0.15);
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      position: relative;
+      transition: transform .3s, border-color .3s, background .3s;
+      cursor: default;
+    }
+
+    .step-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(79,195,247,0.5);
+      background: rgba(79,195,247,0.07);
+    }
+
+    .step-number {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--sky);
+      color: var(--white);
+      font-size: .7rem;
+      font-weight: 700;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: .05em;
+    }
+
+    .step-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+
+    .step-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: .5rem;
+      color: var(--white);
+    }
+
+    .step-card p {
+      font-size: .85rem;
+      color: rgba(248,251,255,0.6);
+      line-height: 1.65;
+    }
+
+    /* ── JENIS HUJAN ── */
+    .jenis {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+
+    .jenis-header { margin-bottom: 3rem; }
+
+    .jenis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .jenis-card {
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(79,195,247,0.12);
+      background: linear-gradient(135deg, rgba(30,96,145,0.2) 0%, rgba(13,27,42,0.4) 100%);
+      transition: transform .3s;
+    }
+
+    .jenis-card:hover { transform: scale(1.02); }
+
+    .jenis-card-header {
+      padding: 2rem 2rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .jenis-emoji { font-size: 2.2rem; }
+
+    .jenis-card-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .jenis-card-body {
+      padding: 0 2rem 2rem;
+      font-size: .9rem;
+      color: rgba(248,251,255,0.65);
+      line-height: 1.75;
+    }
+
+    .jenis-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      background: rgba(79,195,247,0.1);
+      border: 1px solid rgba(79,195,247,0.25);
+      color: var(--rain);
+      font-size: .72rem;
+      font-weight: 500;
+      padding: .25rem .75rem;
+      border-radius: 999px;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    /* ── FAKTA MENARIK ── */
+    .fakta {
+      background: rgba(255,255,255,0.03);
+      border-top: 1px solid rgba(79,195,247,0.1);
+      padding: 6rem 2rem;
+    }
+
+    .fakta-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .fakta-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .fakta-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .fakta-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(79,195,247,0.12);
+      border-radius: 14px;
+      padding: 1.5rem;
+      transition: border-color .3s;
+    }
+
+    .fakta-item:hover { border-color: var(--gold); }
+
+    .fakta-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      margin-top: .1rem;
+    }
+
+    .fakta-item h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      margin-bottom: .3rem;
+      color: var(--white);
+    }
+
+    .fakta-item p {
+      font-size: .85rem;
+      color: rgba(248,251,255,0.6);
+      line-height: 1.65;
+    }
+
+    /* ── DAMPAK ── */
+    .dampak {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+
+    .dampak-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .dampak-col h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+
+    .dampak-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .8rem;
+    }
+
+    .dampak-col ul li {
+      display: flex;
+      gap: .75rem;
+      align-items: flex-start;
+      font-size: .9rem;
+      color: rgba(248,251,255,0.7);
+      line-height: 1.6;
+    }
+
+    .dampak-col ul li::before {
+      content: '›';
+      color: var(--rain);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: -.05rem;
+    }
+
+    .dampak-col.positif h3 { color: #81c784; }
+    .dampak-col.negatif h3 { color: #e57373; }
+
+    /* ── QUIZ ── */
+    .quiz {
+      background: linear-gradient(135deg, rgba(30,96,145,0.25) 0%, rgba(13,27,42,0.5) 100%);
+      border-top: 1px solid rgba(79,195,247,0.1);
+      border-bottom: 1px solid rgba(79,195,247,0.1);
+      padding: 6rem 2rem;
+    }
+
+    .quiz-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .quiz-header { margin-bottom: 2.5rem; }
+
+    .quiz-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(79,195,247,0.2);
+      border-radius: 20px;
+      padding: 2.5rem;
+    }
+
+    #quiz-question {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      margin-bottom: 1.75rem;
+      line-height: 1.45;
+      min-height: 60px;
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .quiz-opt {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(79,195,247,0.2);
+      color: var(--white);
+      border-radius: 10px;
+      padding: .85rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      cursor: pointer;
+      transition: background .2s, border-color .2s;
+    }
+
+    .quiz-opt:hover:not(:disabled) {
+      background: rgba(79,195,247,0.12);
+      border-color: var(--rain);
+    }
+
+    .quiz-opt.correct { background: rgba(129,199,132,0.2); border-color: #81c784; color: #81c784; }
+    .quiz-opt.wrong   { background: rgba(229,115,115,0.2); border-color: #e57373; color: #e57373; }
+
+    #quiz-feedback {
+      min-height: 24px;
+      font-size: .9rem;
+      color: var(--mist);
+      margin-bottom: 1rem;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--sky);
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      padding: .8rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+    }
+
+    .btn-primary:hover { background: #155b8a; transform: translateY(-1px); }
+
+    #quiz-progress {
+      font-size: .75rem;
+      color: rgba(248,251,255,0.4);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      margin-top: .75rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid rgba(79,195,247,0.1);
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--rain);
+      margin-bottom: .5rem;
+    }
+
+    .footer-logo span { color: var(--gold); }
+
+    footer p {
+      font-size: .8rem;
+      color: rgba(248,251,255,0.4);
+      line-height: 1.75;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50%       { opacity: 1;   transform: scaleY(1.15); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { gap: 1rem; }
+      .what-rain { grid-template-columns: 1fr; }
+      .dampak-grid { grid-template-columns: 1fr; }
+      .quiz-options { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="rain-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Hujan<span>UST</span></div>
+  <ul>
+    <li><a href="#siklus">Siklus</a></li>
+    <li><a href="#jenis">Jenis</a></li>
+    <li><a href="#fakta">Fakta</a></li>
+    <li><a href="#quiz">Kuis</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Media Pembelajaran Ilmu Alam</div>
+  <h1>Fenomena<br><em>Hujan</em></h1>
+  <p class="hero-sub">
+    Jelajahi keajaiban siklus air — dari penguapan lautan hingga tetes air yang menyentuh bumi.
+    Disusun untuk mahasiswa Universitas Sarjanawiyata Tamansiswa.
+  </p>
+  <div class="scroll-hint">
+    <span>Gulir ke bawah</span>
+    <div class="arrow"></div>
+  </div>
+</section>
+
+<!-- APA ITU HUJAN -->
+<section>
+  <div class="what-rain">
+    <div class="text reveal">
+      <p class="section-label">Pengantar</p>
+      <h2 class="section-title">Apa Itu Hujan?</h2>
+      <p>
+        Hujan adalah fenomena alam berupa jatuhnya air dari atmosfer ke permukaan bumi dalam bentuk tetesan cair. 
+        Proses ini merupakan bagian vital dari <strong>siklus hidrologi</strong> yang menjaga keseimbangan air di planet kita.
+      </p>
+      <p>
+        Tetesan hujan terbentuk ketika uap air di atmosfer mendingin dan berkondensasi membentuk awan, 
+        kemudian menyatu dan cukup berat untuk jatuh karena gravitasi. Ukuran tetesan bervariasi dari 0,5 mm 
+        hingga sekitar 5 mm.
+      </p>
+      <p>
+        Hujan merupakan sumber air tawar utama di bumi, mendukung kehidupan ekosistem, pertanian, 
+        dan kebutuhan air manusia di seluruh dunia.
+      </p>
+    </div>
+    <div class="rain-visual reveal">
+      <span class="rain-label-badge">💧 H₂O · Presipitasi · Siklus Air</span>
+    </div>
+  </div>
+</section>
+
+<!-- SIKLUS HUJAN -->
+<section class="siklus" id="siklus">
+  <div class="siklus-inner">
+    <div class="siklus-header reveal">
+      <p class="section-label">Proses Alam</p>
+      <h2 class="section-title">Siklus Terjadinya Hujan</h2>
+      <p style="color:rgba(248,251,255,0.6); max-width:520px; margin:0 auto; font-size:.95rem; line-height:1.75;">
+        Hujan tidak terjadi begitu saja. Ada serangkaian proses fisika yang indah di baliknya.
+      </p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-number">1</div>
+        <div class="step-icon">☀️</div>
+        <h3>Evaporasi</h3>
+        <p>Panas matahari memanaskan permukaan air laut, danau, dan sungai sehingga air berubah menjadi uap air yang naik ke atmosfer.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-number">2</div>
+        <div class="step-icon">🌿</div>
+        <h3>Transpirasi</h3>
+        <p>Tumbuhan melepaskan uap air melalui pori-pori daun (stomata) ke udara, menambah kandungan uap air di atmosfer.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-number">3</div>
+        <div class="step-icon">🌬️</div>
+        <h3>Kondensasi</h3>
+        <p>Uap air naik dan mendingin ketika mencapai atmosfer yang lebih tinggi, berubah menjadi tetes air kecil yang membentuk awan.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-number">4</div>
+        <div class="step-icon">☁️</div>
+        <h3>Pembentukan Awan</h3>
+        <p>Jutaan tetes air kecil berkumpul membentuk awan. Tetes air terus bergabung menjadi tetes yang lebih besar dan berat.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-number">5</div>
+        <div class="step-icon">🌧️</div>
+        <h3>Presipitasi</h3>
+        <p>Ketika tetes air cukup berat, gravitasi menariknya jatuh ke bumi sebagai hujan, salju, hujan es, atau kabut.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-number">6</div>
+        <div class="step-icon">🏞️</div>
+        <h3>Aliran & Infiltrasi</h3>
+        <p>Air hujan mengalir ke sungai dan laut, sebagian meresap ke dalam tanah menjadi air tanah, siklus pun berulang.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JENIS HUJAN -->
+<section id="jenis">
+  <div class="jenis">
+    <div class="jenis-header reveal">
+      <p class="section-label">Klasifikasi</p>
+      <h2 class="section-title">Jenis-Jenis Hujan</h2>
+    </div>
+    <div class="jenis-grid">
+      <div class="jenis-card reveal">
+        <div class="jenis-card-header">
+          <div class="jenis-emoji">⛰️</div>
+          <h3>Hujan Orografis</h3>
+        </div>
+        <div class="jenis-card-body">
+          Terjadi ketika udara lembab dipaksa naik oleh penghalang pegunungan. Udara mendingin dan uap air terkondensasi, menghasilkan hujan di lereng yang menghadap angin (windward), sementara lereng sebaliknya menjadi kering.
+          <div><span class="jenis-tag">Pegunungan</span></div>
+        </div>
+      </div>
+      <div class="jenis-card reveal">
+        <div class="jenis-card-header">
+          <div class="jenis-emoji">🌡️</div>
+          <h3>Hujan Konvektif</h3>
+        </div>
+        <div class="jenis-card-body">
+          Disebabkan oleh pemanasan permukaan bumi yang intens, menyebabkan udara hangat naik dengan cepat. Menghasilkan awan kumulonimbus dan hujan deras disertai petir yang berlangsung singkat namun kuat.
+          <div><span class="jenis-tag">Tropis</span></div>
+        </div>
+      </div>
+      <div class="jenis-card reveal">
+        <div class="jenis-card-header">
+          <div class="jenis-emoji">🌀</div>
+          <h3>Hujan Frontal (Siklonal)</h3>
+        </div>
+        <div class="jenis-card-body">
+          Terjadi di zona pertemuan dua massa udara berbeda — udara hangat bertemu udara dingin. Udara hangat terdorong naik, mendingin, dan menghasilkan hujan yang luas dan berlangsung lama.
+          <div><span class="jenis-tag">Subtropis</span></div>
+        </div>
+      </div>
+      <div class="jenis-card reveal">
+        <div class="jenis-card-header">
+          <div class="jenis-emoji">🌫️</div>
+          <h3>Hujan Zenithal</h3>
+        </div>
+        <div class="jenis-card-body">
+          Khas di daerah khatulistiwa. Terjadi dua kali setahun saat matahari tepat berada di atas kepala (zenit). Pemanasan maksimum menciptakan konveksi kuat yang menghasilkan hujan lebat.
+          <div><span class="jenis-tag">Khatulistiwa</span></div>
+        </div>
+      </div>
+      <div class="jenis-card reveal">
+        <div class="jenis-card-header">
+          <div class="jenis-emoji">❄️</div>
+          <h3>Hujan Es (Hail)</h3>
+        </div>
+        <div class="jenis-card-body">
+          Presipitasi padat berupa bola-bola es. Terbentuk dalam awan kumulonimbus berenergi tinggi. Tetes air membeku, terbawa angin ke atas berulang kali, mengumpulkan lapisan es, hingga akhirnya jatuh.
+          <div><span class="jenis-tag">Badai Petir</span></div>
+        </div>
+      </div>
+      <div class="jenis-card reveal">
+        <div class="jenis-card-header">
+          <div class="jenis-emoji">🌈</div>
+          <h3>Hujan Asam</h3>
+        </div>
+        <div class="jenis-card-body">
+          Hujan dengan pH di bawah 5,6 akibat polutan SO₂ dan NOₓ dari industri dan kendaraan yang bereaksi dengan uap air di atmosfer membentuk asam sulfat dan asam nitrat yang berbahaya bagi lingkungan.
+          <div><span class="jenis-tag">Polusi</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAKTA MENARIK -->
+<section class="fakta" id="fakta">
+  <div class="fakta-inner">
+    <div class="fakta-header reveal">
+      <p class="section-label">Tahukah Kamu?</p>
+      <h2 class="section-title">Fakta Menarik tentang Hujan</h2>
+    </div>
+    <div class="fakta-list">
+      <div class="fakta-item reveal">
+        <div class="fakta-icon">💧</div>
+        <div>
+          <h4>Bentuk Tetesan Hujan</h4>
+          <p>Tetesan hujan bukan berbentuk seperti air mata. Bentuk sebenarnya menyerupai roti burger pipih — pipih di bawah dan melengkung di atas akibat resistensi udara.</p>
+        </div>
+      </div>
+      <div class="fakta-item reveal">
+        <div class="fakta-icon">🏃</div>
+        <div>
+          <h4>Kecepatan Jatuh</h4>
+          <p>Tetesan hujan jatuh dengan kecepatan rata-rata 9 km/jam. Kecepatan dibatasi oleh resistensi udara (terminal velocity) sehingga tidak menyakiti kulit kita.</p>
+        </div>
+      </div>
+      <div class="fakta-item reveal">
+        <div class="fakta-icon">👃</div>
+        <div>
+          <h4>Aroma Hujan</h4>
+          <p>Bau khas setelah hujan disebut <em>petrichor</em>, berasal dari geosmin yang dihasilkan bakteri tanah dan senyawa minyak dari tanaman yang tercampur saat tetes pertama menyentuh tanah.</p>
+        </div>
+      </div>
+      <div class="fakta-item reveal">
+        <div class="fakta-icon">🌍</div>
+        <div>
+          <h4>Distribusi Hujan di Bumi</h4>
+          <p>Tempat terbasah di bumi adalah Mawsynram, India, dengan curah hujan rata-rata 11.871 mm/tahun. Sementara gurun Atacama di Chile bisa tak hujan selama bertahun-tahun.</p>
+        </div>
+      </div>
+      <div class="fakta-item reveal">
+        <div class="fakta-icon">⚡</div>
+        <div>
+          <h4>Hujan dan Petir</h4>
+          <p>Setiap hari sekitar 40.000 badai petir terjadi di seluruh dunia. Kilat dapat mencapai suhu 30.000 K — lima kali lebih panas dari permukaan matahari!</p>
+        </div>
+      </div>
+      <div class="fakta-item reveal">
+        <div class="fakta-icon">🪐</div>
+        <div>
+          <h4>Hujan di Planet Lain</h4>
+          <p>Di Venus turun hujan asam sulfat, di Titan (bulan Saturnus) hujan metan cair, dan di planet HD 189733b diduga turun hujan partikel kaca yang bergerak 8.700 km/jam!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DAMPAK HUJAN -->
+<section>
+  <div class="dampak">
+    <div class="reveal">
+      <p class="section-label">Analisis</p>
+      <h2 class="section-title">Dampak Hujan bagi Kehidupan</h2>
+    </div>
+    <div class="dampak-grid">
+      <div class="dampak-col positif reveal">
+        <h3>✅ Dampak Positif</h3>
+        <ul>
+          <li>Menyuburkan tanah dan menyediakan air bagi tanaman pertanian</li>
+          <li>Mengisi cadangan air tanah dan sumber air minum</li>
+          <li>Membersihkan udara dari debu dan polutan</li>
+          <li>Menjaga ekosistem hutan tetap lembab dan subur</li>
+          <li>Mengisi waduk dan PLTA sebagai sumber energi listrik</li>
+          <li>Menurunkan suhu udara yang panas dan pengatur iklim global</li>
+        </ul>
+      </div>
+      <div class="dampak-col negatif reveal">
+        <h3>⚠️ Dampak Negatif</h3>
+        <ul>
+          <li>Banjir dan genangan yang merusak infrastruktur dan permukiman</li>
+          <li>Tanah longsor di daerah lereng terjal akibat tanah jenuh air</li>
+          <li>Erosi tanah yang mengurangi kesuburan lahan pertanian</li>
+          <li>Penyebaran penyakit seperti leptospirosis dan DBD pasca banjir</li>
+          <li>Kerusakan tanaman budidaya akibat curah hujan berlebih</li>
+          <li>Gangguan transportasi dan aktivitas sehari-hari masyarakat</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KUIS -->
+<section class="quiz" id="quiz">
+  <div class="quiz-inner">
+    <div class="quiz-header reveal">
+      <p class="section-label">Uji Pemahaman</p>
+      <h2 class="section-title">Kuis Fenomena Hujan</h2>
+      <p style="color:rgba(248,251,255,0.6); font-size:.9rem;">Jawab 5 pertanyaan berikut untuk menguji pemahamanmu!</p>
+    </div>
+    <div class="quiz-card reveal">
+      <div id="quiz-question">Memuat pertanyaan...</div>
+      <div class="quiz-options" id="quiz-options"></div>
+      <div id="quiz-feedback"></div>
+      <button class="btn-primary" id="quiz-next" style="display:none;" onclick="nextQuestion()">
+        Pertanyaan Berikutnya →
+      </button>
+      <div id="quiz-progress"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Hujan<span>UST</span></div>
+  <p>
+    Media Pembelajaran Fenomena Hujan<br>
+    Disusun oleh Mahasiswa <strong>Universitas Sarjanawiyata Tamansiswa</strong><br>
+    Yogyakarta · Indonesia · 2024–2025
+  </p>
+  <p style="margin-top:1.5rem; font-size:.72rem; opacity:.4;">
+    Untuk keperluan pendidikan · Sumber: BMKG, USGS, NASA Earth Science
+  </p>
+</footer>
+
+<script>
+  /* ── RAIN ANIMATION ── */
+  const canvas = document.getElementById('rain-canvas');
+  const ctx = canvas.getContext('2d');
+  let drops = [];
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    drops = Array.from({ length: 120 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      len: Math.random() * 18 + 8,
+      speed: Math.random() * 4 + 3,
+      opacity: Math.random() * 0.5 + 0.15
+    }));
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+
+  function animRain() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drops.forEach(d => {
+      ctx.beginPath();
+      ctx.moveTo(d.x, d.y);
+      ctx.lineTo(d.x - 1, d.y + d.len);
+      ctx.strokeStyle = `rgba(79,195,247,${d.opacity})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      d.y += d.speed;
+      d.x -= 0.4;
+      if (d.y > canvas.height) {
+        d.y = -d.len;
+        d.x = Math.random() * canvas.width;
+      }
+    });
+    requestAnimationFrame(animRain);
+  }
+
+  animRain();
+
+  /* ── SCROLL REVEAL ── */
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  /* ── QUIZ ── */
+  const questions = [
+    {
+      q: "Apa yang dimaksud dengan proses evaporasi dalam siklus hujan?",
+      options: ["Penguapan air dari permukaan menjadi uap air", "Tetes air jatuh dari awan ke bumi", "Uap air berubah menjadi awan", "Penyerapan air oleh akar tanaman"],
+      answer: 0
+    },
+    {
+      q: "Jenis hujan apa yang terbentuk akibat pertemuan dua massa udara berbeda?",
+      options: ["Hujan Orografis", "Hujan Konvektif", "Hujan Frontal", "Hujan Zenithal"],
+      answer: 2
+    },
+    {
+      q: "Apa nama senyawa yang menyebabkan aroma khas setelah hujan?",
+      options: ["Geosmin dan Petrichor", "Metana dan Etana", "CO₂ dan SO₂", "Ozon dan Nitrat"],
+      answer: 0
+    },
+    {
+      q: "Berapa kecepatan rata-rata tetesan hujan saat jatuh ke bumi?",
+      options: ["Sekitar 1 km/jam", "Sekitar 9 km/jam", "Sekitar 30 km/jam", "Sekitar 100 km/jam"],
+      answer: 1
+    },
+    {
+      q: "Hujan asam terbentuk dari reaksi uap air dengan polutan utama berupa...",
+      options: ["CO₂ dan metan", "SO₂ dan NOₓ", "Ozon dan Argon", "Partikel debu dan serbuk sari"],
+      answer: 1
+    }
+  ];
+
+  let current = 0, score = 0, answered = false;
+
+  function loadQuestion() {
+    const q = questions[current];
+    document.getElementById('quiz-question').textContent = q.q;
+    document.getElementById('quiz-feedback').textContent = '';
+    document.getElementById('quiz-next').style.display = 'none';
+    answered = false;
+
+    const opts = document.getElementById('quiz-options');
+    opts.innerHTML = '';
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'quiz-opt';
+      btn.textContent = opt;
+      btn.onclick = () => selectAnswer(i, btn);
+      opts.appendChild(btn);
+    });
+
+    document.getElementById('quiz-progress').textContent =
+      `Pertanyaan ${current + 1} dari ${questions.length} · Skor: ${score}`;
+  }
+
+  function selectAnswer(i, btn) {
+    if (answered) return;
+    answered = true;
+    const correct = questions[current].answer;
+    const allBtns = document.querySelectorAll('.quiz-opt');
+    allBtns.forEach(b => b.disabled = true);
+
+    if (i === correct) {
+      btn.classList.add('correct');
+      document.getElementById('quiz-feedback').textContent = '✅ Benar! Bagus sekali!';
+      score++;
+    } else {
+      btn.classList.add('wrong');
+      allBtns[correct].classList.add('correct');
+      document.getElementById('quiz-feedback').textContent = '❌ Kurang tepat. Coba pelajari lagi!';
+    }
+
+    document.getElementById('quiz-progress').textContent =
+      `Pertanyaan ${current + 1} dari ${questions.length} · Skor: ${score}`;
+
+    if (current < questions.length - 1) {
+      document.getElementById('quiz-next').style.display = 'inline-flex';
+    } else {
+      setTimeout(() => showResult(), 1000);
+    }
+  }
+
+  function nextQuestion() {
+    current++;
+    loadQuestion();
+  }
+
+  function showResult() {
+    const pct = Math.round((score / questions.length) * 100);
+    let grade = pct >= 80 ? '🏆 Luar Biasa!' : pct >= 60 ? '👍 Cukup Baik!' : '📚 Perlu Belajar Lagi!';
+    document.getElementById('quiz-question').innerHTML =
+      `<strong>${grade}</strong><br>Kamu menjawab benar <strong>${score} dari ${questions.length}</strong> pertanyaan (${pct}%).`;
+    document.getElementById('quiz-options').innerHTML = '';
+    document.getElementById('quiz-feedback').textContent = 'Terima kasih telah mengerjakan kuis ini!';
+    document.getElementById('quiz-next').textContent = '🔄 Ulangi Kuis';
+    document.getElementById('quiz-next').style.display = 'inline-flex';
+    document.getElementById('quiz-next').onclick = () => { current = 0; score = 0; loadQuestion(); };
+    document.getElementById('quiz-progress').textContent = '';
+  }
+
+  loadQuestion();
+</script>
+</body>
+</html>
