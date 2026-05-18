@@ -1,810 +1,209 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Website Teks Eksplanasi</title>
-
-<style>
-
-/* ========================= */
-/* RESET */
-/* ========================= */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, sans-serif;
-    scroll-behavior:smooth;
-}
-
-body{
-    background:#f4f9ff;
-    color:#222;
-}
-
-/* ========================= */
-/* LOADER */
-/* ========================= */
-
-#loader{
-    position:fixed;
-    width:100%;
-    height:100vh;
-    background:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:9999;
-}
-
-.spinner{
-    width:60px;
-    height:60px;
-    border:6px solid #ddd;
-    border-top:6px solid #0d6efd;
-    border-radius:50%;
-    animation:spin 1s linear infinite;
-}
-
-@keyframes spin{
-    100%{
-        transform:rotate(360deg);
-    }
-}
-
-/* ========================= */
-/* NAVBAR */
-/* ========================= */
-
-header{
-    position:sticky;
-    top:0;
-    z-index:1000;
-}
-
-.navbar{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    background:#0d6efd;
-    padding:15px 8%;
-    color:white;
-}
-
-.logo{
-    font-size:28px;
-    font-weight:bold;
-}
-
-.nav-links{
-    display:flex;
-    list-style:none;
-    gap:20px;
-}
-
-.nav-links a{
-    color:white;
-    text-decoration:none;
-    transition:0.3s;
-}
-
-.nav-links a:hover{
-    color:yellow;
-}
-
-.hamburger{
-    display:none;
-    font-size:30px;
-    cursor:pointer;
-}
-
-/* ========================= */
-/* HERO */
-/* ========================= */
-
-.hero{
-    height:100vh;
-    background:
-    linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),
-    url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200&auto=format&fit=crop');
-    background-size:cover;
-    background-position:center;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    color:white;
-    padding:20px;
-}
-
-.hero-text h1{
-    font-size:60px;
-    margin-bottom:20px;
-}
-
-.hero-text p{
-    font-size:22px;
-    margin-bottom:30px;
-    max-width:700px;
-}
-
-.btn{
-    background:#0d6efd;
-    color:white;
-    padding:15px 30px;
-    border-radius:10px;
-    text-decoration:none;
-    transition:0.3s;
-}
-
-.btn:hover{
-    background:#084298;
-}
-
-/* ========================= */
-/* SEARCH */
-/* ========================= */
-
-.search-section{
-    padding:80px 10%;
-    text-align:center;
-}
-
-.search-section h2{
-    margin-bottom:20px;
-    font-size:35px;
-}
-
-.search-section input{
-    width:80%;
-    padding:15px;
-    border:none;
-    border-radius:10px;
-    font-size:16px;
-    box-shadow:0 5px 10px rgba(0,0,0,.1);
-}
-
-.search-results{
-    margin-top:20px;
-}
-
-.search-results p{
-    background:white;
-    margin:10px auto;
-    padding:15px;
-    width:80%;
-    border-radius:10px;
-    box-shadow:0 5px 10px rgba(0,0,0,.1);
-}
-
-/* ========================= */
-/* MATERI */
-/* ========================= */
-
-.section-title{
-    text-align:center;
-    font-size:40px;
-    margin-top:40px;
-}
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:25px;
-    padding:60px 10%;
-}
-
-.card{
-    background:white;
-    padding:30px;
-    border-radius:20px;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-    transition:0.4s;
-}
-
-.card:hover{
-    transform:translateY(-10px);
-}
-
-.card h2{
-    margin-bottom:15px;
-}
-
-.card p{
-    line-height:1.8;
-}
-
-/* ========================= */
-/* VIDEO */
-/* ========================= */
-
-.video-section{
-    padding:60px 10%;
-}
-
-.video-container{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-    gap:30px;
-}
-
-.video-card{
-    background:white;
-    padding:20px;
-    border-radius:20px;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-}
-
-.video-card iframe{
-    width:100%;
-    height:250px;
-    border:none;
-    border-radius:15px;
-}
-
-/* ========================= */
-/* INFOGRAFIS */
-/* ========================= */
-
-.gallery{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:20px;
-    padding:60px 10%;
-}
-
-.gallery img{
-    width:100%;
-    border-radius:20px;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-.gallery img:hover{
-    transform:scale(1.05);
-}
-
-/* ========================= */
-/* QUIZ */
-/* ========================= */
-
-.quiz-section{
-    padding:60px 10%;
-}
-
-.quiz-box{
-    background:white;
-    padding:30px;
-    border-radius:20px;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
-}
-
-.quiz-box h3{
-    margin-bottom:20px;
-}
-
-.quiz-box button{
-    margin-top:15px;
-    padding:12px 20px;
-    border:none;
-    border-radius:10px;
-    background:#0d6efd;
-    color:white;
-    cursor:pointer;
-}
-
-/* ========================= */
-/* FAQ */
-/* ========================= */
-
-.faq{
-    padding:60px 10%;
-}
-
-.faq-item{
-    background:white;
-    margin-bottom:15px;
-    padding:20px;
-    border-radius:15px;
-    cursor:pointer;
-    box-shadow:0 5px 10px rgba(0,0,0,.1);
-}
-
-.faq-answer{
-    display:none;
-    margin-top:10px;
-}
-
-/* ========================= */
-/* FOOTER */
-/* ========================= */
-
-footer{
-    background:#0d6efd;
-    color:white;
-    text-align:center;
-    padding:30px;
-    margin-top:50px;
-}
-
-/* ========================= */
-/* SCROLL BUTTON */
-/* ========================= */
-
-#scrollTop{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    background:#0d6efd;
-    color:white;
-    border:none;
-    padding:12px 18px;
-    border-radius:50%;
-    cursor:pointer;
-    display:none;
-}
-
-/* ========================= */
-/* RESPONSIVE */
-/* ========================= */
-
-@media(max-width:768px){
-
-    .nav-links{
-        position:absolute;
-        top:70px;
-        right:-100%;
-        width:220px;
-        height:100vh;
-        background:#0d6efd;
-        flex-direction:column;
-        padding-top:40px;
-        transition:0.5s;
-    }
-
-    .nav-links.active{
-        right:0;
-    }
-
-    .hamburger{
-        display:block;
-    }
-
-    .hero-text h1{
-        font-size:40px;
-    }
-
-    .hero-text p{
-        font-size:18px;
-    }
-
-}
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembelajaran Teks Eksplanasi</title>
+    <!-- Font Google: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- File CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- ========================= -->
-<!-- LOADER -->
-<!-- ========================= -->
-
-<div id="loader">
-    <div class="spinner"></div>
-</div>
-
-<!-- ========================= -->
-<!-- NAVBAR -->
-<!-- ========================= -->
-
-<header>
-
-<nav class="navbar">
-
-<h2 class="logo">EksplanasiKu</h2>
-
-<ul class="nav-links" id="navLinks">
-<li><a href="#home">Home</a></li>
-<li><a href="#materi">Materi</a></li>
-<li><a href="#video">Video</a></li>
-<li><a href="#infografis">Infografis</a></li>
-<li><a href="#quiz">Quiz</a></li>
-<li><a href="#faq">FAQ</a></li>
-</ul>
-
-<div class="hamburger" id="hamburger">
-☰
-</div>
-
-</nav>
-
-</header>
-
-<!-- ========================= -->
-<!-- HERO -->
-<!-- ========================= -->
-
-<section class="hero" id="home">
-
-<div class="hero-text">
-
-<h1 id="typing"></h1>
-
-<p>
-Website pembelajaran interaktif mengenai teks eksplanasi
-lengkap dengan video, infografis, dan quiz edukatif.
-</p>
-
-<a href="#materi" class="btn">
-Mulai Belajar
-</a>
-
-</div>
-
-</section>
-
-<!-- ========================= -->
-<!-- SEARCH -->
-<!-- ========================= -->
-
-<section class="search-section">
-
-<h2>Cari Materi</h2>
-
-<input
-type="text"
-id="searchInput"
-placeholder="Cari hujan, gempa bumi, gunung meletus..."
->
-
-<div class="search-results" id="searchResults"></div>
-
-</section>
-
-<!-- ========================= -->
-<!-- MATERI -->
-<!-- ========================= -->
-
-<h1 class="section-title" id="materi">
-Materi Teks Eksplanasi
-</h1>
-
-<section class="cards">
-
-<div class="card">
-<h2>🌧 Hujan</h2>
-<p>
-Hujan terjadi melalui proses evaporasi,
-kondensasi, dan presipitasi.
-Air menguap karena panas matahari,
-kemudian membentuk awan dan turun sebagai hujan.
-</p>
-</div>
-
-<div class="card">
-<h2>🌋 Gunung Meletus</h2>
-<p>
-Gunung meletus terjadi akibat tekanan magma
-yang sangat besar di dalam bumi.
-Magma keluar melalui kawah dan membawa abu vulkanik.
-</p>
-</div>
-
-<div class="card">
-<h2>🌍 Gempa Bumi</h2>
-<p>
-Gempa bumi terjadi akibat pergeseran lempeng bumi
-atau aktivitas vulkanik yang menghasilkan getaran.
-</p>
-</div>
-
-</section>
-
-<!-- ========================= -->
-<!-- VIDEO -->
-<!-- ========================= -->
-
-<h1 class="section-title" id="video">
-Video Pembelajaran
-</h1>
-
-<section class="video-section">
-
-<div class="video-container">
-
-<div class="video-card">
-<h3>Video Hujan</h3>
-
-<iframe
-src="https://drive.google.com/file/d/FILE_ID/preview"
-allow="autoplay">
-</iframe>
-
-</div>
-
-<div class="video-card">
-<h3>Video Gunung Meletus</h3>
-
-<iframe
-src="https://drive.google.com/file/d/FILE_ID/preview"
-allow="autoplay">
-</iframe>
-
-</div>
-
-<div class="video-card">
-<h3>Video Gempa Bumi</h3>
-
-<iframe
-src="https://drive.google.com/file/d/FILE_ID/preview"
-allow="autoplay">
-</iframe>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ========================= -->
-<!-- INFOGRAFIS -->
-<!-- ========================= -->
-
-<h1 class="section-title" id="infografis">
-Infografis
-</h1>
-
-<section class="gallery">
-
-<img src="https://picsum.photos/400/300?1">
-<img src="https://picsum.photos/400/300?2">
-<img src="https://picsum.photos/400/300?3">
-
-</section>
-
-<!-- ========================= -->
-<!-- QUIZ -->
-<!-- ========================= -->
-
-<h1 class="section-title" id="quiz">
-Quiz Interaktif
-</h1>
-
-<section class="quiz-section">
-
-<div class="quiz-box">
-
-<h3>
-Apa proses perubahan air menjadi uap?
-</h3>
-
-<input type="radio" name="q1"> Evaporasi <br>
-<input type="radio" name="q1"> Presipitasi <br>
-<input type="radio" name="q1"> Kondensasi <br>
-
-<button onclick="cekQuiz()">
-Cek Jawaban
-</button>
-
-<p id="hasilQuiz"></p>
-
-</div>
-
-</section>
-
-<!-- ========================= -->
-<!-- FAQ -->
-<!-- ========================= -->
-
-<h1 class="section-title" id="faq">
-FAQ
-</h1>
-
-<section class="faq">
-
-<div class="faq-item">
-
-<h3>Apa itu teks eksplanasi?</h3>
-
-<div class="faq-answer">
-Teks eksplanasi adalah teks yang menjelaskan proses terjadinya suatu fenomena alam atau sosial.
-</div>
-
-</div>
-
-<div class="faq-item">
-
-<h3>Apa ciri teks eksplanasi?</h3>
-
-<div class="faq-answer">
-Mengandung penjelasan proses, fakta, hubungan sebab akibat, dan bersifat informatif.
-</div>
-
-</div>
-
-</section>
-
-<!-- ========================= -->
-<!-- FOOTER -->
-<!-- ========================= -->
-
-<footer>
-
-<p>
-© 2026 Website Pembelajaran Teks Eksplanasi
-</p>
-
-</footer>
-
-<!-- SCROLL BUTTON -->
-
-<button id="scrollTop">
-↑
-</button>
-
-<!-- ========================= -->
-<!-- JAVASCRIPT -->
-<!-- ========================= -->
-
-<script>
-
-/* ========================= */
-/* LOADER */
-/* ========================= */
-
-window.addEventListener("load", function(){
-
-document.getElementById("loader").style.display = "none";
-
-});
-
-/* ========================= */
-/* HAMBURGER */
-/* ========================= */
-
-const hamburger =
-document.getElementById("hamburger");
-
-const navLinks =
-document.getElementById("navLinks");
-
-hamburger.addEventListener("click", () => {
-
-navLinks.classList.toggle("active");
-
-});
-
-/* ========================= */
-/* TYPING EFFECT */
-/* ========================= */
-
-const text =
-"Belajar Teks Eksplanasi";
-
-let index = 0;
-
-function typingEffect(){
-
-if(index < text.length){
-
-document.getElementById("typing").innerHTML +=
-text.charAt(index);
-
-index++;
-
-setTimeout(typingEffect, 100);
-
-}
-
-}
-
-typingEffect();
-
-/* ========================= */
-/* SEARCH */
-/* ========================= */
-
-const materi = [
-"Hujan",
-"Gunung Meletus",
-"Gempa Bumi"
-];
-
-const searchInput =
-document.getElementById("searchInput");
-
-const searchResults =
-document.getElementById("searchResults");
-
-searchInput.addEventListener("keyup", () => {
-
-let result = "";
-
-const filtered = materi.filter(item =>
-item.toLowerCase().includes(
-searchInput.value.toLowerCase()
-)
-);
-
-filtered.forEach(item => {
-
-result += `<p>${item}</p>`;
-
-});
-
-searchResults.innerHTML = result;
-
-});
-
-/* ========================= */
-/* QUIZ */
-/* ========================= */
-
-function cekQuiz(){
-
-document.getElementById("hasilQuiz").innerHTML =
-"Jawaban benar adalah Evaporasi";
-
-}
-
-/* ========================= */
-/* FAQ */
-/* ========================= */
-
-const faqItems =
-document.querySelectorAll(".faq-item");
-
-faqItems.forEach(item => {
-
-item.addEventListener("click", () => {
-
-const answer =
-item.querySelector(".faq-answer");
-
-answer.style.display =
-answer.style.display === "block"
-? "none"
-: "block";
-
-});
-
-});
-
-/* ========================= */
-/* SCROLL TOP */
-/* ========================= */
-
-const scrollBtn =
-document.getElementById("scrollTop");
-
-window.onscroll = function(){
-
-if(document.body.scrollTop > 300 ||
-document.documentElement.scrollTop > 300){
-
-scrollBtn.style.display = "block";
-
-}else{
-
-scrollBtn.style.display = "none";
-
-}
-
-};
-
-scrollBtn.addEventListener("click", () => {
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-});
-
-</script>
-
+    <!-- Navbar Sticky -->
+    <header>
+        <div class="subtitle-kelompok">
+            Kelompok 1: Ratna, Ayuk, Safa, Agni, Berlianaputri, Muh. Azril Saputra (019)
+        </div>
+        <nav class="navbar">
+            <div class="logo">Edu<span>Eksplanasi</span></div>
+            <ul class="nav-links">
+                <li><a href="#beranda">Beranda</a></li>
+                <li><a href="#materi">Materi</a></li>
+                <li><a href="#contoh">Contoh & Media</a></li>
+                <li><a href="#quiz">Kuis</a></li>
+            </ul>
+            <button id="darkModeToggle" class="btn-icon"><i class="fas fa-moon"></i></button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="hero">
+        <div class="hero-content reveal">
+            <h1>Pembelajaran <span>Teks Eksplanasi</span></h1>
+            <p>Pahami fenomena alam dan sosial di sekitarmu melalui teks eksplanasi yang faktual dan saintifik.</p>
+            <a href="#materi" class="btn-primary">Mulai Belajar <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="hero-image reveal">
+            <!-- Placeholder ilustrasi bencana alam (Bisa diganti dengan tag img jika ada aset) -->
+            <div class="illustration-box">
+                <i class="fas fa-volcano fa-5x"></i>
+                <i class="fas fa-cloud-showers-heavy fa-4x"></i>
+                <i class="fas fa-house-crack fa-4x"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Materi Utama -->
+    <section id="materi" class="materi-section">
+        
+        <!-- Pengertian -->
+        <div class="materi-box reveal">
+            <h2><i class="fas fa-book-open"></i> Pengertian</h2>
+            <p><strong>Teks Eksplanasi</strong> adalah teks yang berisi tentang proses "mengapa" dan "bagaimana" kejadian-kejadian alam, sosial, ilmu pengetahuan, budaya, dan lainnya dapat terjadi. Teks ini selalu memiliki hubungan sebab-akibat (kausalitas) dan proses.</p>
+        </div>
+
+        <!-- Ciri-ciri -->
+        <div class="materi-box reveal">
+            <h2><i class="fas fa-list-check"></i> Ciri-ciri Teks Eksplanasi</h2>
+            <div class="grid-cards">
+                <div class="card"><i class="fas fa-check-circle"></i> Informasi berdasarkan <b>Fakta</b> (faktual).</div>
+                <div class="card"><i class="fas fa-microscope"></i> Bersifat <b>Keilmuan</b> (sains).</div>
+                <div class="card"><i class="fas fa-info-circle"></i> Bersifat <b>Informatif</b>, tidak berusaha memengaruhi pembaca.</div>
+                <div class="card"><i class="fas fa-globe"></i> Fokus pada hal <b>Umum</b> (generik), bukan partisipan manusia.</div>
+            </div>
+        </div>
+
+        <!-- Struktur -->
+        <div class="materi-box reveal">
+            <h2><i class="fas fa-sitemap"></i> Struktur Teks Eksplanasi</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>1. Pernyataan Umum</h3>
+                    <p>Berisi gambaran awal atau penjelasan umum tentang fenomena yang dibahas.</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>2. Deretan Penjelas</h3>
+                    <p>Berisi penjelasan detail mengenai proses terjadinya fenomena (sebab-akibat).</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>3. Interpretasi (Opsional)</h3>
+                    <p>Berisi kesimpulan, tanggapan, atau pernyataan dari penulis.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kaidah Kebahasaan -->
+        <div class="materi-box reveal">
+            <h2><i class="fas fa-language"></i> Kaidah Kebahasaan</h2>
+            <ul class="styled-list">
+                <li>Menggunakan konjungsi kausalitas (sebab, karena, oleh sebab itu).</li>
+                <li>Menggunakan konjungsi kronologis (kemudian, lalu, setelah itu).</li>
+                <li>Banyak menggunakan kata ganti benda, bukan kata ganti orang.</li>
+                <li>Banyak menggunakan istilah ilmiah atau teknis.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Section Contoh & Media (Dilengkapi Fitur Page/Tab) -->
+    <section id="contoh" class="contoh-section">
+        <h2 class="section-title reveal">Contoh & Multimedia</h2>
+        
+        <!-- Tab Navigasi (Fitur Page) -->
+        <div class="tab-nav reveal">
+            <button class="tab-btn active" onclick="openTab('hujan')">1. Hujan</button>
+            <button class="tab-btn" onclick="openTab('gunung')">2. Gunung Meletus</button>
+            <button class="tab-btn" onclick="openTab('gempa')">3. Gempa Bumi</button>
+        </div>
+
+        <!-- Konten Tab 1: Hujan -->
+        <div id="hujan" class="tab-content active reveal">
+            <div class="media-card">
+                <div class="media-info">
+                    <h3>Proses Terjadinya Hujan</h3>
+                    <p>Hujan terjadi melalui siklus hidrologi, dimulai dari evaporasi air laut akibat panas matahari, kondensasi menjadi awan, hingga presipitasi saat awan tidak mampu menahan massa air.</p>
+                    <div class="btn-group">
+                        <a href="https://drive.google.com/..." target="_blank" class="btn-outline"><i class="fas fa-image"></i> Lihat Infografis (Drive)</a>
+                        <a href="https://drive.google.com/..." target="_blank" class="btn-outline"><i class="fas fa-video"></i> Tonton Video (Drive)</a>
+                    </div>
+                </div>
+                <div class="media-interactive">
+                    <div class="video-placeholder"><i class="fas fa-cloud-rain fa-3x"></i><br>Thumbnail Video Hujan</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Konten Tab 2: Gunung Meletus -->
+        <div id="gunung" class="tab-content reveal">
+            <div class="media-card">
+                <div class="media-info">
+                    <h3>Erupsi Gunung Berapi</h3>
+                    <p>Gunung meletus terjadi akibat endapan magma di dalam perut bumi yang didorong keluar oleh gas bertekanan tinggi.</p>
+                    <div class="btn-group">
+                        <a href="https://drive.google.com/..." target="_blank" class="btn-outline"><i class="fas fa-image"></i> Lihat Infografis (Drive)</a>
+                        <a href="https://drive.google.com/..." target="_blank" class="btn-outline"><i class="fas fa-video"></i> Tonton Video (Drive)</a>
+                    </div>
+                </div>
+                <div class="media-interactive">
+                    <div class="video-placeholder"><i class="fas fa-volcano fa-3x"></i><br>Thumbnail Video Erupsi</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Konten Tab 3: Gempa Bumi -->
+        <div id="gempa" class="tab-content reveal">
+            <div class="media-card">
+                <div class="media-info">
+                    <h3>Proses Gempa Bumi</h3>
+                    <p>Gempa bumi adalah getaran di permukaan bumi yang disebabkan oleh pelepasan energi dari dalam secara tiba-tiba yang menciptakan gelombang seismik, sering kali karena pergerakan lempeng tektonik.</p>
+                    <div class="btn-group">
+                        <a href="https://drive.google.com/..." target="_blank" class="btn-outline"><i class="fas fa-image"></i> Lihat Infografis (Drive)</a>
+                        <a href="https://drive.google.com/..." target="_blank" class="btn-outline"><i class="fas fa-video"></i> Tonton Video (Drive)</a>
+                    </div>
+                </div>
+                <div class="media-interactive">
+                    <div class="video-placeholder"><i class="fas fa-house-crack fa-3x"></i><br>Thumbnail Video Gempa</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Kuis Interaktif -->
+    <section id="quiz" class="quiz-section reveal">
+        <h2 class="section-title">Uji Pemahamanmu</h2>
+        <div class="quiz-container">
+            <div id="quiz-header">
+                <h3 id="question-text">Pertanyaan akan muncul di sini</h3>
+            </div>
+            <div id="options-container" class="options-grid">
+                <!-- Opsi jawaban dirender oleh JS -->
+            </div>
+            <button id="next-btn" class="btn-primary" style="display: none;">Selanjutnya</button>
+            <div id="result-container" style="display: none;">
+                <h3 id="score-text"></h3>
+                <button id="restart-btn" class="btn-outline">Ulangi Kuis</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <h3>Pendidikan Bahasa dan Sastra Indonesia (PBSI) UST</h3>
+                <p>Website media pembelajaran interaktif ini dibuat untuk memudahkan siswa dalam memahami Teks Eksplanasi.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Referensi</h4>
+                <ul>
+                    <li>Buku Bahasa Indonesia Kelas XI</li>
+                    <li>Kemdikbudristek</li>
+                    <li>PUEBI Daring</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Dibuat oleh Muh. Azril Saputra (019). All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Tombol Back to Top -->
+    <button id="backToTopBtn" title="Go to top"><i class="fas fa-chevron-up"></i></button>
+
+    <!-- File JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>
