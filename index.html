@@ -1,0 +1,2021 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pembelajaran Teks Eksplanasi | UST Yogyakarta</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --hijau-tua: #1a4731;
+      --hijau-mid: #2e7d52;
+      --hijau-muda: #4caf80;
+      --emas: #c9a84c;
+      --emas-muda: #f0d080;
+      --krem: #fdf6e3;
+      --krem-gelap: #f0e6c8;
+      --coklat: #5c3d1e;
+      --teks-gelap: #1a1a1a;
+      --teks-medium: #3a3a3a;
+      --putih: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Serif 4', Georgia, serif;
+      background: var(--krem);
+      color: var(--teks-gelap);
+      overflow-x: hidden;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      background: var(--hijau-tua);
+      border-bottom: 3px solid var(--emas);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--emas);
+      object-fit: cover;
+    }
+
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      color: var(--emas-muda);
+      font-size: 0.85rem;
+      line-height: 1.2;
+    }
+
+    .nav-brand span {
+      display: block;
+      font-size: 0.65rem;
+      color: #aed6b5;
+      font-family: 'Source Serif 4', serif;
+      font-style: italic;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #aed6b5;
+      text-decoration: none;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 4px;
+      transition: all 0.2s;
+      font-family: 'Source Serif 4', serif;
+    }
+
+    .nav-links a:hover {
+      background: var(--hijau-mid);
+      color: var(--emas-muda);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      margin-top: 64px;
+      min-height: 92vh;
+      background:
+        linear-gradient(160deg, rgba(26,71,49,0.95) 0%, rgba(46,125,82,0.85) 50%, rgba(26,71,49,0.97) 100%),
+        url('https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=1400&q=80') center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 60%, rgba(201,168,76,0.15) 0%, transparent 70%);
+    }
+
+    .hero-ornament {
+      position: absolute;
+      font-size: 20rem;
+      color: rgba(201,168,76,0.04);
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+      pointer-events: none;
+      user-select: none;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--emas);
+      color: var(--hijau-tua);
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      padding: 4px 16px;
+      border-radius: 2px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      animation: fadeDown 0.8s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 900;
+      color: var(--putih);
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+      animation: fadeDown 0.8s 0.1s ease both;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--emas-muda);
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: #c8e6d4;
+      font-style: italic;
+      margin-bottom: 2.5rem;
+      animation: fadeDown 0.8s 0.2s ease both;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeDown 0.8s 0.3s ease both;
+    }
+
+    .meta-item {
+      text-align: center;
+    }
+
+    .meta-item .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--emas-muda);
+      display: block;
+    }
+
+    .meta-item .lbl {
+      font-size: 0.75rem;
+      color: #90c4a0;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .hero-cta {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeDown 0.8s 0.4s ease both;
+    }
+
+    .btn-primary {
+      background: var(--emas);
+      color: var(--hijau-tua);
+      padding: 14px 32px;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: var(--emas-muda);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(201,168,76,0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--emas-muda);
+      padding: 13px 32px;
+      border: 2px solid var(--emas);
+      border-radius: 4px;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+
+    .btn-outline:hover {
+      background: rgba(201,168,76,0.15);
+      transform: translateY(-2px);
+    }
+
+    /* ===== SECTION BASE ===== */
+    section {
+      padding: 5rem 2rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--hijau-mid);
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: var(--hijau-tua);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      font-size: 1.05rem;
+      color: var(--teks-medium);
+      max-width: 680px;
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    .divider {
+      width: 60px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--emas), var(--emas-muda));
+      margin: 1rem 0 2rem;
+      border-radius: 2px;
+    }
+
+    /* ===== PENGERTIAN ===== */
+    #pengertian {
+      background: var(--krem);
+    }
+
+    .pengertian-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+      margin-top: 3rem;
+    }
+
+    .pengertian-text p {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--teks-medium);
+      margin-bottom: 1.2rem;
+    }
+
+    .pengertian-text p strong {
+      color: var(--hijau-tua);
+    }
+
+    .definisi-card {
+      background: var(--hijau-tua);
+      color: var(--putih);
+      padding: 2.5rem;
+      border-radius: 8px;
+      border-left: 6px solid var(--emas);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .definisi-card::before {
+      content: '"';
+      position: absolute;
+      top: -20px;
+      left: 20px;
+      font-size: 8rem;
+      color: rgba(201,168,76,0.15);
+      font-family: 'Playfair Display', serif;
+      line-height: 1;
+    }
+
+    .definisi-card p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      font-style: italic;
+      position: relative;
+    }
+
+    .definisi-card .source {
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--emas-muda);
+      font-style: normal;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .ahli-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .ahli-card {
+      background: var(--krem-gelap);
+      border: 1px solid #d4c5a0;
+      padding: 1.2rem;
+      border-radius: 6px;
+      border-top: 3px solid var(--hijau-mid);
+    }
+
+    .ahli-card .nama {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: var(--hijau-tua);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .ahli-card p {
+      font-size: 0.85rem;
+      color: var(--teks-medium);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    /* ===== CIRI-CIRI ===== */
+    #ciri {
+      background: var(--hijau-tua);
+      color: var(--putih);
+    }
+
+    #ciri .section-title { color: var(--emas-muda); }
+    #ciri .section-label { color: var(--hijau-muda); }
+    #ciri .section-desc { color: #b0d4be; }
+
+    .ciri-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .ciri-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ciri-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--emas), var(--emas-muda));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .ciri-card:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-4px);
+    }
+
+    .ciri-card:hover::after { transform: scaleX(1); }
+
+    .ciri-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--emas);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.2rem;
+      color: var(--hijau-tua);
+    }
+
+    .ciri-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--emas-muda);
+      margin-bottom: 0.75rem;
+    }
+
+    .ciri-card p {
+      font-size: 0.9rem;
+      color: #b0d4be;
+      line-height: 1.7;
+    }
+
+    /* ===== STRUKTUR ===== */
+    #struktur { background: var(--krem); }
+
+    .struktur-wrap {
+      margin-top: 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .struktur-img {
+      position: sticky;
+      top: 80px;
+    }
+
+    .struktur-img img {
+      width: 100%;
+      border-radius: 8px;
+      border: 3px solid var(--emas);
+      box-shadow: 0 20px 60px rgba(26,71,49,0.2);
+    }
+
+    .struktur-img .img-caption {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #888;
+      font-style: italic;
+      margin-top: 0.5rem;
+    }
+
+    .struktur-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1.8rem 0;
+      border-bottom: 1px dashed #d4c5a0;
+      position: relative;
+    }
+
+    .step-item:last-child { border-bottom: none; }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      background: var(--hijau-tua);
+      color: var(--emas-muda);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .step-num::after {
+      content: '';
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 38px;
+      background: linear-gradient(to bottom, var(--hijau-mid), transparent);
+    }
+
+    .step-item:last-child .step-num::after { display: none; }
+
+    .step-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--hijau-tua);
+      margin-bottom: 0.6rem;
+    }
+
+    .step-content p {
+      font-size: 0.95rem;
+      color: var(--teks-medium);
+      line-height: 1.8;
+    }
+
+    .step-tag {
+      display: inline-block;
+      background: var(--krem-gelap);
+      color: var(--hijau-mid);
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 0.5rem;
+      border: 1px solid #c8b888;
+    }
+
+    /* ===== KAIDAH KEBAHASAAN ===== */
+    #kaidah {
+      background: linear-gradient(135deg, var(--krem-gelap) 0%, var(--krem) 100%);
+    }
+
+    .kaidah-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .kaidah-card {
+      background: var(--putih);
+      border-radius: 8px;
+      padding: 2rem;
+      border: 1px solid #e0d5b8;
+      box-shadow: 0 4px 20px rgba(26,71,49,0.06);
+      transition: all 0.3s;
+    }
+
+    .kaidah-card:hover {
+      box-shadow: 0 12px 40px rgba(26,71,49,0.12);
+      transform: translateY(-3px);
+      border-color: var(--hijau-muda);
+    }
+
+    .kaidah-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .kaidah-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--hijau-tua), var(--hijau-mid));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--emas-muda);
+      flex-shrink: 0;
+    }
+
+    .kaidah-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--hijau-tua);
+    }
+
+    .kaidah-card p {
+      font-size: 0.9rem;
+      color: var(--teks-medium);
+      line-height: 1.75;
+    }
+
+    .kaidah-example {
+      margin-top: 1rem;
+      background: var(--krem);
+      border-left: 3px solid var(--emas);
+      padding: 0.8rem 1rem;
+      border-radius: 0 4px 4px 0;
+      font-size: 0.85rem;
+      color: var(--coklat);
+      font-style: italic;
+    }
+
+    .kaidah-example strong {
+      font-style: normal;
+      color: var(--hijau-tua);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+    }
+
+    /* ===== CONTOH ===== */
+    #contoh { background: var(--hijau-tua); }
+    #contoh .section-title { color: var(--emas-muda); }
+    #contoh .section-label { color: var(--hijau-muda); }
+    #contoh .section-desc { color: #b0d4be; }
+
+    .contoh-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin: 2rem 0 0;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 8px 20px;
+      border: 1px solid rgba(201,168,76,0.4);
+      background: transparent;
+      color: #aed6b5;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .tab-btn.active {
+      background: var(--emas);
+      color: var(--hijau-tua);
+      border-color: var(--emas);
+      font-weight: 600;
+    }
+
+    .tab-btn:hover:not(.active) {
+      background: rgba(201,168,76,0.1);
+      color: var(--emas-muda);
+    }
+
+    .contoh-content {
+      display: none;
+      margin-top: 2rem;
+    }
+
+    .contoh-content.active { display: block; }
+
+    .contoh-article {
+      background: var(--krem);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid var(--emas);
+    }
+
+    .contoh-article img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+    }
+
+    .contoh-body {
+      padding: 2.5rem;
+    }
+
+    .contoh-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--hijau-tua);
+      margin-bottom: 1.5rem;
+      line-height: 1.3;
+    }
+
+    .contoh-paragraf {
+      margin-bottom: 1.2rem;
+    }
+
+    .contoh-paragraf .label {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--putih);
+      background: var(--hijau-mid);
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .contoh-paragraf p {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: var(--teks-medium);
+    }
+
+    /* ===== JENIS ===== */
+    #jenis { background: var(--krem); }
+
+    .jenis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .jenis-card {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #d4c5a0;
+      transition: all 0.3s;
+    }
+
+    .jenis-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(26,71,49,0.15);
+    }
+
+    .jenis-img {
+      height: 180px;
+      overflow: hidden;
+    }
+
+    .jenis-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+
+    .jenis-card:hover .jenis-img img {
+      transform: scale(1.06);
+    }
+
+    .jenis-body {
+      padding: 1.5rem;
+      background: var(--putih);
+    }
+
+    .jenis-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--hijau-tua);
+      margin-bottom: 0.5rem;
+    }
+
+    .jenis-body p {
+      font-size: 0.88rem;
+      color: var(--teks-medium);
+      line-height: 1.7;
+    }
+
+    .jenis-tag {
+      display: inline-block;
+      background: var(--krem);
+      border: 1px solid var(--emas);
+      color: var(--coklat);
+      font-size: 0.7rem;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-bottom: 0.7rem;
+    }
+
+    /* ===== LANGKAH MENULIS ===== */
+    #menulis {
+      background: linear-gradient(135deg, #1a4731 0%, #0d2d1f 100%);
+      color: var(--putih);
+    }
+
+    #menulis .section-title { color: var(--emas-muda); }
+    #menulis .section-label { color: var(--hijau-muda); }
+    #menulis .section-desc { color: #b0d4be; }
+    #menulis .divider { background: linear-gradient(90deg, var(--emas), transparent); }
+
+    .menulis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+      counter-reset: step;
+    }
+
+    .menulis-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 8px;
+      padding: 2rem;
+      counter-increment: step;
+      position: relative;
+      transition: all 0.3s;
+    }
+
+    .menulis-card:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: var(--emas);
+    }
+
+    .menulis-card::before {
+      content: counter(step, decimal-leading-zero);
+      position: absolute;
+      top: -16px;
+      left: 20px;
+      background: var(--emas);
+      color: var(--hijau-tua);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    .menulis-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--emas-muda);
+      margin-bottom: 0.75rem;
+    }
+
+    .menulis-card p {
+      font-size: 0.88rem;
+      color: #a8c8b4;
+      line-height: 1.75;
+    }
+
+    /* ===== LATIHAN ===== */
+    #latihan { background: var(--krem-gelap); }
+
+    .latihan-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .soal-card {
+      background: var(--putih);
+      border-radius: 8px;
+      padding: 2rem;
+      border: 1px solid #d4c5a0;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    }
+
+    .soal-num {
+      display: inline-block;
+      background: var(--hijau-tua);
+      color: var(--emas-muda);
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 36px;
+      margin-bottom: 1rem;
+    }
+
+    .soal-card .pertanyaan {
+      font-size: 1rem;
+      color: var(--teks-gelap);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .pilihan {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .pilihan label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      border: 1px solid #e0d5b8;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: var(--teks-medium);
+      transition: all 0.2s;
+    }
+
+    .pilihan label:hover {
+      background: var(--krem);
+      border-color: var(--hijau-mid);
+    }
+
+    .pilihan input[type="radio"] { margin-top: 2px; accent-color: var(--hijau-tua); }
+
+    .btn-check {
+      margin-top: 1rem;
+      background: var(--hijau-tua);
+      color: var(--emas-muda);
+      border: none;
+      padding: 10px 24px;
+      border-radius: 4px;
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-check:hover { background: var(--hijau-mid); }
+
+    .hasil {
+      margin-top: 0.75rem;
+      padding: 0.6rem 1rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      display: none;
+    }
+
+    .hasil.benar {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      display: block;
+    }
+
+    .hasil.salah {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      display: block;
+    }
+
+    /* ===== RANGKUMAN ===== */
+    #rangkuman { background: var(--hijau-tua); }
+    #rangkuman .section-title { color: var(--emas-muda); }
+    #rangkuman .section-label { color: var(--hijau-muda); }
+
+    .rangkuman-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .rangkuman-item {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 8px;
+      padding: 1.8rem;
+      text-align: center;
+    }
+
+    .rangkuman-item .emoji {
+      font-size: 2.5rem;
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    .rangkuman-item h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--emas-muda);
+      margin-bottom: 0.5rem;
+    }
+
+    .rangkuman-item p {
+      font-size: 0.85rem;
+      color: #9ac4a8;
+      line-height: 1.7;
+    }
+
+    /* ===== REFERENSI ===== */
+    #referensi { background: var(--krem); }
+
+    .ref-list {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .ref-item {
+      background: var(--putih);
+      border: 1px solid #d4c5a0;
+      border-radius: 6px;
+      padding: 1rem 1.5rem;
+      font-size: 0.88rem;
+      color: var(--teks-medium);
+      line-height: 1.7;
+      border-left: 4px solid var(--hijau-mid);
+    }
+
+    .ref-item strong { color: var(--hijau-tua); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #0d2015;
+      color: #6a9e7a;
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 3px solid var(--emas);
+    }
+
+    footer .logo-area {
+      margin-bottom: 1rem;
+    }
+
+    footer .logo-area img {
+      height: 56px;
+      opacity: 0.85;
+      border-radius: 50%;
+      border: 2px solid var(--emas);
+    }
+
+    footer h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--emas-muda);
+      font-size: 1.2rem;
+      margin-bottom: 0.4rem;
+    }
+
+    footer p {
+      font-size: 0.85rem;
+      margin-bottom: 0.3rem;
+    }
+
+    footer .copy {
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      color: #4a7a5a;
+      border-top: 1px solid #1e3d28;
+      padding-top: 1rem;
+    }
+
+    /* ===== SCROLL PROGRESS ===== */
+    .progress-bar {
+      position: fixed;
+      top: 64px; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--emas), var(--emas-muda));
+      z-index: 998;
+      width: 0%;
+      transition: width 0.1s;
+    }
+
+    /* ===== BACK TO TOP ===== */
+    .back-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 44px;
+      height: 44px;
+      background: var(--hijau-tua);
+      color: var(--emas-muda);
+      border: 2px solid var(--emas);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s;
+      z-index: 997;
+    }
+
+    .back-top.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .back-top:hover {
+      background: var(--hijau-mid);
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .pengertian-grid { grid-template-columns: 1fr; }
+      .struktur-wrap { grid-template-columns: 1fr; }
+      .struktur-img { position: static; }
+      .latihan-grid { grid-template-columns: 1fr; }
+      .ahli-grid { grid-template-columns: 1fr; }
+      .hero-meta { gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Logo_UST.png/240px-Logo_UST.png"
+         alt="Logo UST"
+         onerror="this.src='https://via.placeholder.com/40x40/1a4731/c9a84c?text=UST'"/>
+    <div class="nav-brand">
+      Teks Eksplanasi
+      <span>Universitas Sarjanawiyata Tamansiswa</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#pengertian">Pengertian</a></li>
+    <li><a href="#ciri">Ciri-ciri</a></li>
+    <li><a href="#struktur">Struktur</a></li>
+    <li><a href="#kaidah">Kaidah</a></li>
+    <li><a href="#contoh">Contoh</a></li>
+    <li><a href="#jenis">Jenis</a></li>
+    <li><a href="#latihan">Latihan</a></li>
+    <li><a href="#referensi">Referensi</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-ornament">E</div>
+  <div class="hero-content">
+    <div class="hero-badge">Mata Pelajaran Bahasa Indonesia</div>
+    <h1>Pembelajaran<br/><em>Teks Eksplanasi</em></h1>
+    <p class="hero-sub">Memahami fenomena alam dan sosial melalui penjelasan ilmiah yang sistematis</p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <span class="num">6</span>
+        <span class="lbl">Materi Utama</span>
+      </div>
+      <div class="meta-item">
+        <span class="num">3</span>
+        <span class="lbl">Struktur Teks</span>
+      </div>
+      <div class="meta-item">
+        <span class="num">10</span>
+        <span class="lbl">Soal Latihan</span>
+      </div>
+      <div class="meta-item">
+        <span class="num">5</span>
+        <span class="lbl">Contoh Teks</span>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="#pengertian" class="btn-primary">Mulai Belajar</a>
+      <a href="#latihan" class="btn-outline">Uji Kemampuan</a>
+    </div>
+  </div>
+</section>
+
+<!-- PENGERTIAN -->
+<section id="pengertian">
+  <div class="container">
+    <div class="section-label">01 — Pengertian</div>
+    <h2 class="section-title">Apa Itu Teks Eksplanasi?</h2>
+    <div class="divider"></div>
+    <p class="section-desc">Teks yang menjelaskan proses terjadinya suatu peristiwa alam, sosial, atau budaya secara ilmiah dan kronologis.</p>
+
+    <div class="pengertian-grid reveal">
+      <div class="pengertian-text">
+        <p><strong>Teks eksplanasi</strong> adalah jenis teks dalam bahasa Indonesia yang bertujuan untuk menjelaskan proses terjadinya suatu fenomena atau peristiwa, baik yang bersifat alam, sosial, budaya, maupun ilmu pengetahuan.</p>
+        <p>Kata "eksplanasi" berasal dari bahasa Latin <em>explanatio</em> yang berarti "penjelasan". Dalam Kurikulum Merdeka, teks eksplanasi dipelajari sebagai salah satu teks fungsional yang penting untuk mengembangkan kemampuan berpikir kritis dan analitis siswa.</p>
+        <p>Teks ini menjawab pertanyaan <strong>"mengapa"</strong> dan <strong>"bagaimana"</strong> suatu peristiwa dapat terjadi, serta menjelaskan urutan sebab-akibat yang menghubungkan berbagai fakta.</p>
+        <p>Berbeda dengan teks deskripsi yang hanya menggambarkan, teks eksplanasi berfokus pada <strong>proses</strong> dan <strong>hubungan kausal</strong> antara satu kejadian dengan kejadian lainnya secara logis.</p>
+
+        <div class="ahli-grid">
+          <div class="ahli-card">
+            <div class="nama">Mahsun (2014)</div>
+            <p>Teks yang disusun dengan struktur yang memasukkan bagian-bagian yang mempertanyakan mengapa dan bagaimana itu menjadi sebuah pernyataan umum, deretan penjelas, dan interpretasi.</p>
+          </div>
+          <div class="ahli-card">
+            <div class="nama">Kosasih (2016)</div>
+            <p>Teks eksplanasi adalah teks yang menyajikan tentang fenomena alam yang bersifat ilmiah dan mencakup proses sebab akibat dalam pembentukannya.</p>
+          </div>
+          <div class="ahli-card">
+            <div class="nama">Anderson & Anderson (2003)</div>
+            <p>An explanation text tells how or why something occurs. It goes beyond a simple description by explaining what happens and the reason for it.</p>
+          </div>
+          <div class="ahli-card">
+            <div class="nama">Pardiyono (2007)</div>
+            <p>Teks eksplanasi adalah jenis teks yang paling penting karena memperkenalkan proses terbentuknya sesuatu yang terjadi di alam semesta.</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="definisi-card">
+          <p>Teks eksplanasi merupakan teks yang berisi penjelasan tentang proses terjadinya suatu fenomena, baik fenomena alam maupun fenomena sosial yang terjadi di sekitar kita dalam kehidupan sehari-hari.</p>
+          <div class="source">— Kemendikbud, Buku Teks Bahasa Indonesia Kurikulum Merdeka</div>
+        </div>
+
+        <div style="margin-top: 2rem; background: var(--krem-gelap); border-radius: 8px; overflow: hidden; border: 1px solid #d4c5a0;">
+          <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&q=80"
+               alt="Fenomena Alam - Teks Eksplanasi"
+               style="width:100%; height:200px; object-fit:cover;"
+               onerror="this.src='https://picsum.photos/seed/alam/600/200'"/>
+          <div style="padding: 1rem; text-align: center; font-size:0.8rem; color:#888; font-style:italic;">
+            Fenomena alam seperti petir sering menjadi topik teks eksplanasi
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CIRI-CIRI -->
+<section id="ciri">
+  <div class="container">
+    <div class="section-label">02 — Ciri-ciri</div>
+    <h2 class="section-title">Ciri-ciri Teks Eksplanasi</h2>
+    <div class="divider"></div>
+    <p class="section-desc">Kenali karakteristik khas yang membedakan teks eksplanasi dari jenis teks lainnya.</p>
+
+    <div class="ciri-grid">
+      <div class="ciri-card reveal">
+        <div class="ciri-icon">📋</div>
+        <h3>Bersifat Faktual</h3>
+        <p>Teks eksplanasi menggunakan fakta-fakta ilmiah yang dapat dipertanggungjawabkan kebenarannya. Setiap pernyataan didasarkan pada data dan bukti yang nyata, bukan opini atau imajinasi pengarang.</p>
+      </div>
+      <div class="ciri-card reveal">
+        <div class="ciri-icon">🔬</div>
+        <h3>Bersifat Ilmiah</h3>
+        <p>Penjelasan menggunakan pendekatan ilmiah dengan istilah-istilah teknis yang sesuai bidangnya. Teks ini menjelaskan fenomena berdasarkan prinsip-prinsip sains dan logika yang dapat diuji.</p>
+      </div>
+      <div class="ciri-card reveal">
+        <div class="ciri-icon">🔗</div>
+        <h3>Hubungan Sebab-Akibat</h3>
+        <p>Menggunakan pola kausalitas (sebab-akibat) yang jelas. Setiap peristiwa dijelaskan penyebab dan akibatnya, membentuk rantai sebab-akibat yang logis dan berurutan.</p>
+      </div>
+      <div class="ciri-card reveal">
+        <div class="ciri-icon">⏱️</div>
+        <h3>Bersifat Kronologis</h3>
+        <p>Peristiwa dijelaskan secara berurutan dari awal hingga akhir atau dari sebab ke akibat. Urutan waktu dan proses sangat diperhatikan untuk memudahkan pemahaman pembaca.</p>
+      </div>
+      <div class="ciri-card reveal">
+        <div class="ciri-icon">🌐</div>
+        <h3>Informasi Umum</h3>
+        <p>Fenomena yang dijelaskan bersifat umum dan dapat terjadi di berbagai tempat, bukan kejadian yang unik atau hanya terjadi sekali. Topiknya relevan untuk banyak pembaca.</p>
+      </div>
+      <div class="ciri-card reveal">
+        <div class="ciri-icon">✍️</div>
+        <h3>Menggunakan Konjungsi</h3>
+        <p>Menggunakan kata hubung kausalitas (karena, sehingga, akibatnya, oleh karena itu) dan kronologis (kemudian, lalu, setelah itu, akhirnya) untuk menghubungkan antargagasan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRUKTUR -->
+<section id="struktur">
+  <div class="container">
+    <div class="section-label">03 — Struktur</div>
+    <h2 class="section-title">Struktur Teks Eksplanasi</h2>
+    <div class="divider"></div>
+    <p class="section-desc">Teks eksplanasi tersusun atas tiga bagian utama yang saling berkaitan dan membangun pemahaman secara sistematis.</p>
+
+    <div class="struktur-wrap reveal">
+      <div class="struktur-img">
+        <img src="https://images.unsplash.com/photo-1568667256549-094345857637?w=500&q=80"
+             alt="Struktur Teks"
+             onerror="this.src='https://picsum.photos/seed/struktur/500/350'"/>
+        <p class="img-caption">Struktur teks eksplanasi tersusun secara hierarkis dan logis</p>
+
+        <div style="margin-top: 1.5rem; background: var(--hijau-tua); border-radius: 8px; padding: 1.5rem; color: var(--putih);">
+          <div style="font-family: 'Playfair Display', serif; color: var(--emas-muda); font-size: 1rem; margin-bottom: 1rem;">💡 Tips Mengidentifikasi Struktur</div>
+          <ul style="font-size: 0.85rem; color: #b0d4be; line-height: 2; list-style: none; padding: 0;">
+            <li>✦ Pernyataan umum → ada di awal, berisi gambaran umum</li>
+            <li>✦ Deretan penjelas → berisi kata "pertama", "kemudian", "lalu"</li>
+            <li>✦ Interpretasi → ada di akhir, berisi simpulan/hikmah</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="struktur-steps">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <span class="step-tag">Bagian Pembuka</span>
+            <h3>Pernyataan Umum (General Statement)</h3>
+            <p>Bagian ini berisi gambaran umum tentang fenomena atau peristiwa yang akan dijelaskan. Pernyataan umum berfungsi sebagai pengantar atau introduksi topik kepada pembaca. Biasanya berisi definisi, gambaran besar, atau latar belakang fenomena yang akan dibahas. Pertanyaan "apa itu fenomena X?" dijawab di sini.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <span class="step-tag">Bagian Inti</span>
+            <h3>Deretan Penjelas (Explanation Sequence)</h3>
+            <p>Merupakan bagian terpanjang yang berisi penjelasan rinci tentang proses terjadinya fenomena. Bagian ini menjawab pertanyaan "mengapa" dan "bagaimana" secara bertahap dan berurutan. Menggunakan urutan kronologis atau sebab-akibat. Setiap paragraf membahas satu tahap atau aspek dari proses yang dijelaskan. Konjungsi kausalitas dan temporal digunakan di sini.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <span class="step-tag">Bagian Penutup</span>
+            <h3>Interpretasi (Closing Interpretation)</h3>
+            <p>Bagian penutup yang berisi penafsiran, tanggapan, atau simpulan dari penulis terkait fenomena yang dijelaskan. Interpretasi bersifat opsional, namun sangat baik jika disertakan karena memberikan pesan atau hikmah dari fenomena yang dibahas. Bisa berisi implikasi, dampak, atau relevansi bagi kehidupan sehari-hari.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KAIDAH KEBAHASAAN -->
+<section id="kaidah">
+  <div class="container">
+    <div class="section-label">04 — Kaidah Kebahasaan</div>
+    <h2 class="section-title">Kaidah Kebahasaan</h2>
+    <div class="divider"></div>
+    <p class="section-desc">Teks eksplanasi memiliki ciri kebahasaan yang khas dan membedakannya dari jenis teks lain.</p>
+
+    <div class="kaidah-grid">
+      <div class="kaidah-card reveal">
+        <div class="kaidah-header">
+          <div class="kaidah-icon">🔤</div>
+          <h3>Kata Benda (Nomina) Umum</h3>
+        </div>
+        <p>Menggunakan kata benda yang merujuk pada fenomena atau konsep umum, bukan perorangan. Subjek dalam teks eksplanasi biasanya berupa benda abstrak, proses, atau peristiwa alam.</p>
+        <div class="kaidah-example"><strong>Contoh:</strong> hujan, gempa bumi, erosi, inflasi, banjir, gunung berapi</div>
+      </div>
+
+      <div class="kaidah-card reveal">
+        <div class="kaidah-header">
+          <div class="kaidah-icon">⚡</div>
+          <h3>Kata Kerja Aktif (Verba Material)</h3>
+        </div>
+        <p>Menggunakan kata kerja yang menunjukkan proses atau tindakan fisik. Verba material digunakan untuk menggambarkan kejadian yang dapat diamati secara langsung di dunia nyata.</p>
+        <div class="kaidah-example"><strong>Contoh:</strong> mengalir, menyebabkan, membentuk, menghasilkan, menguap, mengendap</div>
+      </div>
+
+      <div class="kaidah-card reveal">
+        <div class="kaidah-header">
+          <div class="kaidah-icon">🔗</div>
+          <h3>Konjungsi Kausalitas</h3>
+        </div>
+        <p>Kata hubung yang menyatakan hubungan sebab-akibat antara satu peristiwa dengan peristiwa lainnya. Ini merupakan ciri paling khas dari teks eksplanasi.</p>
+        <div class="kaidah-example"><strong>Contoh:</strong> karena, sehingga, akibatnya, oleh karena itu, maka, disebabkan oleh, mengakibatkan</div>
+      </div>
+
+      <div class="kaidah-card reveal">
+        <div class="kaidah-header">
+          <div class="kaidah-icon">⏰</div>
+          <h3>Konjungsi Kronologis</h3>
+        </div>
+        <p>Kata hubung yang menunjukkan urutan waktu atau tahapan proses secara berurutan. Konjungsi kronologis membantu pembaca memahami alur kejadian dari awal hingga akhir.</p>
+        <div class="kaidah-example"><strong>Contoh:</strong> kemudian, lalu, setelah itu, selanjutnya, akhirnya, pada akhirnya, pertama-tama</div>
+      </div>
+
+      <div class="kaidah-card reveal">
+        <div class="kaidah-header">
+          <div class="kaidah-icon">🔭</div>
+          <h3>Istilah Teknis/Ilmiah</h3>
+        </div>
+        <p>Penggunaan kosakata ilmiah atau teknis sesuai dengan bidang yang dibahas. Istilah teknis memberikan kesan ilmiah dan memperjelas penjelasan secara spesifik.</p>
+        <div class="kaidah-example"><strong>Contoh:</strong> evaporasi, kondensasi, vulkanik, seismik, inflasi, deflasi, fotosintesis</div>
+      </div>
+
+      <div class="kaidah-card reveal">
+        <div class="kaidah-header">
+          <div class="kaidah-icon">📊</div>
+          <h3>Kalimat Pasif</h3>
+        </div>
+        <p>Penggunaan kalimat pasif untuk menekankan proses atau hasil dari suatu kejadian, bukan pelakunya. Kalimat pasif sering digunakan dalam penjelasan ilmiah.</p>
+        <div class="kaidah-example"><strong>Contoh:</strong> "Air diuapkan oleh panas matahari", "Batu-batuan dihancurkan oleh erosi"</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTOH -->
+<section id="contoh">
+  <div class="container">
+    <div class="section-label">05 — Contoh Teks</div>
+    <h2 class="section-title">Contoh Teks Eksplanasi</h2>
+    <div class="divider"></div>
+    <p class="section-desc">Pelajari berbagai contoh teks eksplanasi dengan analisis struktur yang lengkap.</p>
+
+    <div class="contoh-tabs">
+      <button class="tab-btn active" onclick="showTab('hujan')">🌧 Hujan</button>
+      <button class="tab-btn" onclick="showTab('gempa')">🌍 Gempa Bumi</button>
+      <button class="tab-btn" onclick="showTab('pelangi')">🌈 Pelangi</button>
+      <button class="tab-btn" onclick="showTab('inflasi')">📈 Inflasi</button>
+      <button class="tab-btn" onclick="showTab('banjir')">🌊 Banjir</button>
+    </div>
+
+    <!-- HUJAN -->
+    <div class="contoh-content active" id="tab-hujan">
+      <div class="contoh-article">
+        <img src="https://images.unsplash.com/photo-1534274988757-a28bf1a57c17?w=900&q=80"
+             alt="Proses Terjadinya Hujan"
+             onerror="this.src='https://picsum.photos/seed/hujan/900/280'"/>
+        <div class="contoh-body">
+          <h2>Proses Terjadinya Hujan</h2>
+          <div class="contoh-paragraf">
+            <span class="label">Pernyataan Umum</span>
+            <p>Hujan merupakan fenomena alam yang terjadi akibat siklus hidrologi di bumi. Siklus ini melibatkan proses perpindahan air dari permukaan bumi ke atmosfer dan kembali lagi ke permukaan bumi. Hujan sangat penting bagi kehidupan makhluk hidup karena menjadi sumber utama air tawar di permukaan bumi.</p>
+          </div>
+          <div class="contoh-paragraf">
+            <span class="label">Deretan Penjelas</span>
+            <p>Proses terjadinya hujan diawali dengan <strong>evaporasi</strong>, yaitu penguapan air dari permukaan laut, danau, dan sungai akibat panas matahari. Uap air yang ringan kemudian naik ke lapisan atmosfer yang lebih tinggi. Seiring naiknya uap air, suhu udara semakin dingin sehingga terjadilah proses <strong>kondensasi</strong>, yaitu uap air berubah menjadi tetes-tetes air kecil yang membentuk awan.</p>
+          </div>
+          <div class="contoh-paragraf">
+            <p>Ketika tetes-tetes air di dalam awan semakin banyak dan berat, awan tidak lagi mampu menampungnya. Akibatnya, tetes-tetes air tersebut jatuh ke bumi dalam bentuk hujan. Proses ini disebut <strong>presipitasi</strong>. Di daerah yang sangat dingin, presipitasi dapat berbentuk salju atau es.</p>
+          </div>
+          <div class="contoh-paragraf">
+            <span class="label">Interpretasi</span>
+            <p>Dengan demikian, hujan adalah bagian penting dari siklus air yang terus berlangsung di bumi. Tanpa hujan, kehidupan di bumi tidak akan dapat bertahan. Oleh karena itu, kita perlu menjaga kelestarian alam agar siklus hujan terus berjalan dengan baik.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GEMPA -->
+    <div class="contoh-content" id="tab-gempa">
+      <div class="contoh-article">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80"
+             alt="Gempa Bumi"
+             onerror="this.src='https://picsum.photos/seed/gempa/900/280'"/>
+        <div class="contoh-body">
+          <h2>Proses Terjadinya Gempa Bumi</h2>
+          <div class="contoh-paragraf">
+            <span class="label">Pernyataan Umum</span>
+            <p>Gempa bumi adalah getaran atau guncangan yang terjadi di permukaan bumi akibat pelepasan energi secara tiba-tiba dari dalam bumi. Fenomena alam ini dapat terjadi di seluruh dunia, namun lebih sering terjadi di daerah yang berada di pertemuan lempeng tektonik, seperti Indonesia.</p>
+          </div>
+          <div class="contoh-paragraf">
+            <span class="label">Deretan Penjelas</span>
+            <p>Bumi tersusun atas beberapa lempeng tektonik besar yang selalu bergerak secara perlahan. Ketika dua lempeng tektonik bertabrakan, bergesekan, atau saling menjauh, energi yang sangat besar akan terakumulasi di zona pertemuan lempeng tersebut. Energi yang terus menumpuk ini pada akhirnya akan dilepaskan secara tiba-tiba dalam bentuk gelombang seismik.</p>
+          </div>
+          <div class="contoh-paragraf">
+            <p>Titik di dalam bumi tempat terjadinya pelepasan energi disebut <strong>hiposenter</strong> atau fokus gempa. Gelombang seismik merambat ke segala arah dari hiposenter dan mencapai permukaan bumi di titik yang disebut <strong>episenter</strong>. Di sinilah guncangan paling kuat dirasakan. Kekuatan gempa diukur menggunakan skala Richter atau Moment Magnitude Scale (Mw).</p>
+          </div>
+          <div class="contoh-paragraf">
+            <span class="label">Interpretasi</span>
+            <p>Gempa bumi merupakan fenomena alam yang tidak dapat dicegah, namun dampaknya dapat diminimalkan dengan membangun infrastruktur tahan gempa dan meningkatkan kesiapsiagaan masyarakat. Indonesia sebagai negara ring of fire harus selalu siap menghadapi bencana ini.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PELANGI -->
+    <div class="contoh-content" id="tab-pelangi">
+      <div class="contoh-article">
+        <img src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f700?w=900&q=80"
+             alt="Pelangi"
+             onerror="this.src='https://picsum.photos/seed/pelangi/900/280'"/>
+        <div class="contoh-body">
+          <h2>Proses Terbentuknya Pelangi</h2>
+          <div class="contoh-paragraf">
+            <span class="label">Pernyataan Umum</span>
+            <p>Pelangi adalah fenomena optis yang terjadi di atmosfer bumi, ditandai dengan munculnya busur cahaya berwarna-warni yang indah di langit. Pelangi biasanya muncul setelah hujan turun ketika matahari bersinar. Warna-warna pelangi selalu tersusun dalam urutan yang sama: merah, jingga, kuning, hijau, biru, nila, dan ungu (mejikuhibiniu).</p>
+          </div>
+          <div class="contoh-paragraf">
+            <span class="label">Deretan Penjelas</span>
+            <p>Pelangi terbentuk akibat proses <strong>dispersi cahaya</strong>. Ketika sinar matahari memasuki tetes air hujan, cahaya tersebut dibiaskan (refraksi). Di dalam tetes air, cahaya memantul pada bagian dalam tetes (refleksi internal), kemudian dibiaskan kembali saat keluar dari tetes air. Proses ini memisahkan cahaya putih matahari menjadi komponen warna-warnanya.</p>
+          </div>
+          <div class="contoh-paragraf">
+            <p>Setiap warna cahaya memiliki panjang gelombang yang berbeda sehingga dibiaskan pada sudut yang berbeda pula. Warna merah dibiaskan pada sudut terbesar (sekitar 42°), sementara warna ungu dibiaskan pada sudut terkecil (sekitar 40°). Perbedaan sudut inilah yang menyebabkan kita melihat warna-warna terpisah dalam bentuk busur.</p>
+          </div>
+          <div class="contoh-paragraf">
+            <span class="label">Interpretasi</span>
+            <p>Pelangi merupakan bukti indah dari prinsip fisika tentang cahaya. Fenomena ini mengingatkan kita bahwa di balik hujan yang deras, selalu ada keindahan yang menunggu. Secara ilmiah, pelangi mengajarkan kita tentang sifat cahaya dan optika.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFLASI -->
+    <div class="contoh-content" id="tab-inflasi">
+      <div class="contoh-article">
+        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=900&q=80"
+             alt="Inflasi Ekonomi"
+             onerror="this.src='https://picsum.photos/seed/inflasi/900/280'"/>
+        <div class="contoh-body">
+          <h2>Proses Terjadinya Inflasi</h2>
+          <div class="contoh-paragraf">
+            <span class="label">Pernyataan Umum</span>
+            <p>Inflasi adalah fenomena ekonomi yang ditandai oleh kenaikan harga barang dan jasa secara umum dan terus-menerus dalam jangka waktu tertentu. Inflasi merupakan salah satu indikator penting dalam mengukur kesehatan perekonomian suatu negara dan berdampak langsung pada daya beli masyarakat.</p>
+          </div>
+          <div class="contoh-paragraf">
+            <span class="label">Deretan Penjelas</span>
+            <p>Inflasi dapat terjadi melalui beberapa mekanisme. Pertama, <strong>demand-pull inflation</strong> terjadi ketika permintaan masyarakat terhadap barang dan jasa melebihi kapasitas produksi yang tersedia. Kelebihan permintaan ini mendorong produsen menaikkan harga. Kedua, <strong>cost-push inflation</strong> terjadi ketika biaya produksi meningkat, misalnya akibat naiknya harga bahan baku atau upah tenaga kerja, sehingga produsen terpaksa menaikkan harga jual.</p>
+          </div>
+          <div class="contoh-paragraf">
+            <p>Selanjutnya, inflasi juga dapat dipicu oleh kebijakan pemerintah yang mencetak uang terlalu banyak (<strong>monetary inflation</strong>). Ketika jumlah uang beredar meningkat drastis tanpa diimbangi oleh peningkatan produksi barang dan jasa, nilai uang akan menurun dan harga-harga akan naik. Bank Indonesia sebagai bank sentral bertugas mengendalikan inflasi agar tetap pada level yang sehat.</p>
+          </div>
+          <div class="contoh-paragraf">
+            <span class="label">Interpretasi</span>
+            <p>Inflasi yang terkendali (sekitar 2-4% per tahun) sebenarnya menunjukkan perekonomian yang sehat. Namun inflasi yang terlalu tinggi akan merugikan masyarakat, terutama kelompok berpendapatan tetap. Oleh karena itu, pengendalian inflasi menjadi prioritas kebijakan ekonomi setiap negara.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BANJIR -->
+    <div class="contoh-content" id="tab-banjir">
+      <div class="contoh-article">
+        <img src="https://images.unsplash.com/photo-1547683905-f686c993aae5?w=900&q=80"
+             alt="Banjir"
+             onerror="this.src='https://picsum.photos/seed/banjir/900/280'"/>
+        <div class="contoh-body">
+          <h2>Proses Terjadinya Banjir</h2>
+          <div class="contoh-paragraf">
+            <span class="label">Pernyataan Umum</span>
+            <p>Banjir adalah peristiwa di mana suatu daerah tergenang oleh air dalam jumlah besar yang melebihi kapasitas tampung tanah dan saluran air yang ada. Banjir merupakan bencana alam yang sering terjadi di Indonesia, terutama pada musim hujan, dan dapat menyebabkan kerugian materiil serta korban jiwa yang signifikan.</p>
+          </div>
+          <div class="contoh-paragraf">
+            <span class="label">Deretan Penjelas</span>
+            <p>Banjir terjadi akibat beberapa faktor yang saling berkaitan. Curah hujan yang sangat tinggi dan berlangsung lama menyebabkan volume air melebihi kemampuan tanah untuk menyerap air (<strong>infiltrasi</strong>). Air yang tidak terserap kemudian mengalir ke permukaan (limpasan permukaan) dan mengisi sungai, danau, serta saluran air.</p>
+          </div>
+          <div class="contoh-paragraf">
+            <p>Kondisi ini diperparah oleh berkurangnya daerah resapan air akibat alih fungsi lahan hutan menjadi pemukiman dan lahan pertanian. Selain itu, pendangkalan sungai akibat sedimentasi dan penyempitan daerah aliran sungai (DAS) akibat pembangunan di bantaran sungai juga memperburuk situasi. Akibatnya, air sungai meluap dan menggenangi wilayah-wilayah di sekitarnya.</p>
+          </div>
+          <div class="contoh-paragraf">
+            <span class="label">Interpretasi</span>
+            <p>Banjir merupakan fenomena alam yang dipercepat oleh perilaku manusia yang tidak ramah lingkungan. Pencegahan banjir memerlukan upaya terpadu: reboisasi, pengelolaan sampah yang baik, normalisasi sungai, dan tata ruang kota yang memperhatikan daerah resapan air.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JENIS -->
+<section id="jenis">
+  <div class="container">
+    <div class="section-label">06 — Jenis-jenis</div>
+    <h2 class="section-title">Jenis-jenis Teks Eksplanasi</h2>
+    <div class="divider"></div>
+    <p class="section-desc">Berdasarkan topik yang dibahas, teks eksplanasi dibedakan menjadi beberapa jenis.</p>
+
+    <div class="jenis-grid">
+      <div class="jenis-card reveal">
+        <div class="jenis-img">
+          <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=80"
+               alt="Alam"
+               onerror="this.src='https://picsum.photos/seed/alam2/400/180'"/>
+        </div>
+        <div class="jenis-body">
+          <span class="jenis-tag">ALAM</span>
+          <h3>Eksplanasi Fenomena Alam</h3>
+          <p>Menjelaskan proses terjadinya fenomena alam seperti gunung meletus, tsunami, pelangi, petir, angin topan, gerhana, dan bencana alam lainnya.</p>
+        </div>
+      </div>
+
+      <div class="jenis-card reveal">
+        <div class="jenis-img">
+          <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80"
+               alt="Sosial"
+               onerror="this.src='https://picsum.photos/seed/sosial/400/180'"/>
+        </div>
+        <div class="jenis-body">
+          <span class="jenis-tag">SOSIAL</span>
+          <h3>Eksplanasi Fenomena Sosial</h3>
+          <p>Menjelaskan proses terjadinya fenomena dalam masyarakat, seperti kemiskinan, konflik sosial, urbanisasi, pengangguran, dan perubahan sosial budaya.</p>
+        </div>
+      </div>
+
+      <div class="jenis-card reveal">
+        <div class="jenis-img">
+          <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&q=80"
+               alt="Ekonomi"
+               onerror="this.src='https://picsum.photos/seed/ekonomi/400/180'"/>
+        </div>
+        <div class="jenis-body">
+          <span class="jenis-tag">EKONOMI</span>
+          <h3>Eksplanasi Fenomena Ekonomi</h3>
+          <p>Menjelaskan proses terjadinya fenomena ekonomi seperti inflasi, deflasi, resesi, krisis moneter, dan perubahan harga di pasar.</p>
+        </div>
+      </div>
+
+      <div class="jenis-card reveal">
+        <div class="jenis-img">
+          <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400&q=80"
+               alt="Sains"
+               onerror="this.src='https://picsum.photos/seed/sains/400/180'"/>
+        </div>
+        <div class="jenis-body">
+          <span class="jenis-tag">SAINS</span>
+          <h3>Eksplanasi Ilmiah/Sains</h3>
+          <p>Menjelaskan proses atau konsep ilmiah seperti fotosintesis, reaksi kimia, mutasi genetik, pembelahan sel, dan berbagai fenomena dalam sains.</p>
+        </div>
+      </div>
+
+      <div class="jenis-card reveal">
+        <div class="jenis-img">
+          <img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?w=400&q=80"
+               alt="Budaya"
+               onerror="this.src='https://picsum.photos/seed/budaya/400/180'"/>
+        </div>
+        <div class="jenis-body">
+          <span class="jenis-tag">BUDAYA</span>
+          <h3>Eksplanasi Fenomena Budaya</h3>
+          <p>Menjelaskan proses terbentuknya tradisi, adat istiadat, kesenian daerah, atau perubahan budaya dalam suatu masyarakat dari waktu ke waktu.</p>
+        </div>
+      </div>
+
+      <div class="jenis-card reveal">
+        <div class="jenis-img">
+          <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=400&q=80"
+               alt="Teknologi"
+               onerror="this.src='https://picsum.photos/seed/teknologi/400/180'"/>
+        </div>
+        <div class="jenis-body">
+          <span class="jenis-tag">TEKNOLOGI</span>
+          <h3>Eksplanasi Teknologi</h3>
+          <p>Menjelaskan cara kerja atau proses suatu teknologi, seperti cara kerja internet, mesin, komputer, dan berbagai perangkat teknologi modern.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LANGKAH MENULIS -->
+<section id="menulis">
+  <div class="container">
+    <div class="section-label">07 — Cara Menulis</div>
+    <h2 class="section-title">Langkah Menulis Teks Eksplanasi</h2>
+    <div class="divider"></div>
+    <p class="section-desc">Ikuti langkah-langkah berikut untuk menyusun teks eksplanasi yang baik dan sistematis.</p>
+
+    <div class="menulis-grid">
+      <div class="menulis-card reveal">
+        <h3>Pilih Topik/Fenomena</h3>
+        <p>Tentukan fenomena yang akan dijelaskan. Pilih topik yang menarik, bermanfaat, dan dapat dijelaskan secara ilmiah. Pastikan topik cukup luas untuk dibahas secara mendalam namun tetap terfokus.</p>
+      </div>
+      <div class="menulis-card reveal">
+        <h3>Lakukan Riset</h3>
+        <p>Kumpulkan informasi dan data dari sumber terpercaya seperti buku pelajaran, jurnal ilmiah, situs web resmi, dan ensiklopedia. Catat fakta-fakta penting yang akan dimasukkan ke dalam teks.</p>
+      </div>
+      <div class="menulis-card reveal">
+        <h3>Buat Kerangka Teks</h3>
+        <p>Susun kerangka berdasarkan tiga struktur: pernyataan umum, deretan penjelas, dan interpretasi. Tentukan urutan penjelas yang logis dan kronologis agar mudah dipahami pembaca.</p>
+      </div>
+      <div class="menulis-card reveal">
+        <h3>Tulis Pernyataan Umum</h3>
+        <p>Mulai dengan paragraf pembuka yang memperkenalkan fenomena secara umum. Gunakan definisi, gambaran besar, atau fakta menarik untuk menarik perhatian pembaca sejak awal.</p>
+      </div>
+      <div class="menulis-card reveal">
+        <h3>Kembangkan Deretan Penjelas</h3>
+        <p>Jelaskan proses terjadinya fenomena secara bertahap menggunakan konjungsi kausalitas dan kronologis. Setiap paragraf fokus pada satu tahap atau aspek. Sertakan data dan fakta ilmiah.</p>
+      </div>
+      <div class="menulis-card reveal">
+        <h3>Tulis Interpretasi</h3>
+        <p>Akhiri dengan simpulan, penafsiran, atau pesan moral dari fenomena yang dibahas. Interpretasi dapat berisi implikasi fenomena bagi kehidupan atau relevansinya dalam konteks lebih luas.</p>
+      </div>
+      <div class="menulis-card reveal">
+        <h3>Gunakan Kaidah Bahasa</h3>
+        <p>Pastikan teks menggunakan kaidah kebahasaan yang tepat: konjungsi kausalitas, konjungsi kronologis, istilah ilmiah, dan kalimat efektif. Hindari kata-kata subjektif dan emosional.</p>
+      </div>
+      <div class="menulis-card reveal">
+        <h3>Revisi dan Penyuntingan</h3>
+        <p>Baca ulang teks secara keseluruhan. Periksa kesesuaian struktur, kelogisan alur penjelasan, ejaan, tanda baca, dan keefektifan kalimat. Minta orang lain untuk membaca dan memberikan masukan.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LATIHAN -->
+<section id="latihan">
+  <div class="container">
+    <div class="section-label">08 — Evaluasi</div>
+    <h2 class="section-title">Soal Latihan</h2>
+    <div class="divider"></div>
+    <p class="section-desc">Uji pemahamanmu tentang teks eksplanasi dengan mengerjakan soal-soal berikut.</p>
+
+    <div class="latihan-grid">
+      <!-- Soal 1 -->
+      <div class="soal-card reveal">
+        <span class="soal-num">1</span>
+        <p class="pertanyaan">Tujuan utama teks eksplanasi adalah...</p>
+        <div class="pilihan" id="soal1">
+          <label><input type="radio" name="s1" value="a"/> Meyakinkan pembaca untuk melakukan sesuatu</label>
+          <label><input type="radio" name="s1" value="b"/> Menjelaskan proses terjadinya suatu fenomena</label>
+          <label><input type="radio" name="s1" value="c"/> Menggambarkan keindahan suatu objek</label>
+          <label><input type="radio" name="s1" value="d"/> Menghibur pembaca dengan cerita menarik</label>
+        </div>
+        <button class="btn-check" onclick="cekJawaban(1,'b','Menjelaskan proses terjadinya suatu fenomena secara ilmiah adalah tujuan utama teks eksplanasi.')">Periksa Jawaban</button>
+        <div class="hasil" id="hasil1"></div>
+      </div>
+
+      <!-- Soal 2 -->
+      <div class="soal-card reveal">
+        <span class="soal-num">2</span>
+        <p class="pertanyaan">Bagian teks eksplanasi yang berisi gambaran umum tentang fenomena yang akan dibahas disebut...</p>
+        <div class="pilihan" id="soal2">
+          <label><input type="radio" name="s2" value="a"/> Interpretasi</label>
+          <label><input type="radio" name="s2" value="b"/> Deretan penjelas</label>
+          <label><input type="radio" name="s2" value="c"/> Pernyataan umum</label>
+          <label><input type="radio" name="s2" value="d"/> Orientasi</label>
+        </div>
+        <button class="btn-check" onclick="cekJawaban(2,'c','Pernyataan umum (general statement) adalah bagian pembuka yang berisi gambaran umum tentang fenomena.')">Periksa Jawaban</button>
+        <div class="hasil" id="hasil2"></div>
+      </div>
+
+      <!-- Soal 3 -->
+      <div class="soal-card reveal">
+        <span class="soal-num">3</span>
+        <p class="pertanyaan">Konjungsi kausalitas yang tepat untuk teks eksplanasi adalah...</p>
+        <div class="pilihan" id="soal3">
+          <label><input type="radio" name="s3" value="a"/> dan, atau, tetapi</label>
+          <label><input type="radio" name="s3" value="b"/> karena, sehingga, akibatnya</label>
+          <label><input type="radio" name="s3" value="c"/> meskipun, walaupun, biarpun</label>
+          <label><input type="radio" name="s3" value="d"/> jika, apabila, seandainya</label>
+        </div>
+        <button class="btn-check" onclick="cekJawaban(3,'b','Konjungsi kausalitas seperti karena, sehingga, akibatnya digunakan untuk menyatakan hubungan sebab-akibat dalam teks eksplanasi.')">Periksa Jawaban</button>
+        <div class="hasil" id="hasil3"></div>
+      </div>
+
+      <!-- Soal 4 -->
+      <div class="soal-card reveal">
+        <span class="soal-num">4</span>
+        <p class="pertanyaan">Ciri kebahasaan teks eksplanasi yang membedakannya dari teks lain adalah...</p>
+        <div class="pilihan" id="soal4">
+          <label><input type="radio" name="s4" value="a"/> Menggunakan kata ganti orang pertama</label>
+          <label><input type="radio" name="s4" value="b"/> Banyak menggunakan dialog</label>
+          <label><input type="radio" name="s4" value="c"/> Menggunakan hubungan sebab-akibat</label>
+          <label><input type="radio" name="s4" value="d"/> Menggunakan kata-kata puitis</label>
+        </div>
+        <button class="btn-check" onclick="cekJawaban(4,'c','Penggunaan hubungan sebab-akibat (kausalitas) adalah ciri khas utama kebahasaan teks eksplanasi.')">Periksa Jawaban</button>
+        <div class="hasil" id="hasil4"></div>
+      </div>
+
+      <!-- Soal 5 -->
+      <div class="soal-card reveal">
+        <span class="soal-num">5</span>
+        <p class="pertanyaan">Bagian interpretasi dalam teks eksplanasi berisi...</p>
+        <div class="pilihan" id="soal5">
+          <label><input type="radio" name="s5" value="a"/> Penjelasan rinci tentang proses fenomena</label>
+          <label><input type="radio" name="s5" value="b"/> Gambaran umum tentang topik</label>
+          <label><input type="radio" name="s5" value="c"/> Simpulan atau penafsiran penulis</label>
+          <label><input type="radio" name="s5" value="d"/> Daftar referensi yang digunakan</label>
+        </div>
+        <button class="btn-check" onclick="cekJawaban(5,'c','Interpretasi merupakan bagian penutup yang berisi simpulan, penafsiran, atau pesan moral dari fenomena yang dijelaskan.')">Periksa Jawaban</button>
+        <div class="hasil" id="hasil5"></div>
+      </div>
+
+      <!-- Soal 6 -->
+      <div class="soal-card reveal">
+        <span class="soal-num">6</span>
+        <p class="pertanyaan">Pertanyaan yang dijawab oleh teks eksplanasi adalah...</p>
+        <div class="pilihan" id="soal6">
+          <label><input type="radio" name="s6" value="a"/> Siapa dan di mana</label>
+          <label><input type="radio" name="s6" value="b"/> Mengapa dan bagaimana</label>
+          <label><input type="radio" name="s6" value="c"/> Kapan dan berapa</label>
+          <label><input type="radio" name="s6" value="d"/> Apa dan siapa saja</label>
+        </div>
+        <button class="btn-check" onclick="cekJawaban(6,'b','Teks eksplanasi menjawab pertanyaan mengapa (why) suatu fenomena terjadi dan bagaimana (how) proses terjadinya.')">Periksa Jawaban</button>
+        <div class="hasil" id="hasil6"></div>
+      </div>
+
+      <!-- Soal 7 -->
+      <div class="soal-card reveal">
+        <span class="soal-num">7</span>
+        <p class="pertanyaan">Manakah yang merupakan topik tepat untuk teks eksplanasi?</p>
+        <div class="pilihan" id="soal7">
+          <label><input type="radio" name="s7" value="a"/> Kisah petualangan seorang pahlawan</label>
+          <label><input type="radio" name="s7" value="b"/> Proses terjadinya tsunami</label>
+          <label><input type="radio" name="s7" value="c"/> Deskripsi keindahan pantai</label>
+          <label><input type="radio" name="s7" value="d"/> Pendapat tentang kebijakan pemerintah</label>
+        </div>
+        <button class="btn-check" onclick="cekJawaban(7,'b','Proses terjadinya tsunami adalah topik yang tepat karena menjelaskan fenomena alam secara ilmiah dan kausal.')">Periksa Jawaban</button>
+        <div class="hasil" id="hasil7"></div>
+      </div>
+
+      <!-- Soal 8 -->
+      <div class="soal-card reveal">
+        <span class="soal-num">8</span>
+        <p class="pertanyaan">Istilah teknis seperti "evaporasi" dan "kondensasi" dalam teks eksplanasi tentang hujan menunjukkan bahwa teks eksplanasi bersifat...</p>
+        <div class="pilihan" id="soal8">
+          <label><input type="radio" name="s8" value="a"/> Fiktif</label>
+          <label><input type="radio" name="s8" value="b"/> Subjektif</label>
+          <label><input type="radio" name="s8" value="c"/> Ilmiah</label>
+          <label><input type="radio" name="s8" value="d"/> Persuasif</label>
+        </div>
+        <button class="btn-check" onclick="cekJawaban(8,'c','Penggunaan istilah teknis/ilmiah menunjukkan bahwa teks eksplanasi bersifat ilmiah dan berbasis fakta.')">Periksa Jawaban</button>
+        <div class="hasil" id="hasil8"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RANGKUMAN -->
+<section id="rangkuman">
+  <div class="container">
+    <div class="section-label">09 — Rangkuman</div>
+    <h2 class="section-title">Rangkuman Materi</h2>
+    <div class="divider"></div>
+
+    <div class="rangkuman-grid">
+      <div class="rangkuman-item reveal">
+        <span class="emoji">📖</span>
+        <h3>Pengertian</h3>
+        <p>Teks yang menjelaskan proses terjadinya fenomena alam, sosial, atau ilmiah secara kronologis dan kausal.</p>
+      </div>
+      <div class="rangkuman-item reveal">
+        <span class="emoji">🎯</span>
+        <h3>Tujuan</h3>
+        <p>Menjawab pertanyaan "mengapa" dan "bagaimana" suatu peristiwa atau fenomena dapat terjadi.</p>
+      </div>
+      <div class="rangkuman-item reveal">
+        <span class="emoji">🏗️</span>
+        <h3>Struktur</h3>
+        <p>Pernyataan Umum → Deretan Penjelas → Interpretasi. Ketiga bagian tersusun secara logis dan sistematis.</p>
+      </div>
+      <div class="rangkuman-item reveal">
+        <span class="emoji">✍️</span>
+        <h3>Kaidah Bahasa</h3>
+        <p>Konjungsi kausalitas, konjungsi kronologis, istilah ilmiah, verba material, dan kalimat pasif.</p>
+      </div>
+      <div class="rangkuman-item reveal">
+        <span class="emoji">🌍</span>
+        <h3>Jenis</h3>
+        <p>Eksplanasi alam, sosial, ekonomi, sains, budaya, dan teknologi berdasarkan topik yang dibahas.</p>
+      </div>
+      <div class="rangkuman-item reveal">
+        <span class="emoji">⭐</span>
+        <h3>Ciri Utama</h3>
+        <p>Faktual, ilmiah, kronologis, hubungan sebab-akibat, informasi umum, dan menggunakan konjungsi khas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFERENSI -->
+<section id="referensi">
+  <div class="container">
+    <div class="section-label">10 — Referensi</div>
+    <h2 class="section-title">Daftar Referensi</h2>
+    <div class="divider"></div>
+    <p class="section-desc">Sumber-sumber yang digunakan dalam penyusunan materi pembelajaran ini.</p>
+
+    <div class="ref-list">
+      <div class="ref-item">
+        <strong>Anderson, M. & Anderson, K.</strong> (2003). <em>Text Types in English 2.</em> South Yarra: Macmillan Education Australia.
+      </div>
+      <div class="ref-item">
+        <strong>Kemendikbud.</strong> (2021). <em>Buku Teks Bahasa Indonesia SMP/MTs Kelas VIII.</em> Jakarta: Pusat Kurikulum dan Perbukuan, Kemendikbud.
+      </div>
+      <div class="ref-item">
+        <strong>Kemendikbud.</strong> (2022). <em>Buku Panduan Guru Bahasa Indonesia — Kurikulum Merdeka.</em> Jakarta: Pusat Perbukuan.
+      </div>
+      <div class="ref-item">
+        <strong>Kosasih, E.</strong> (2016). <em>Jenis-jenis Teks: Analisis Fungsi, Struktur, dan Kaidah serta Langkah Penulisannya.</em> Bandung: Yrama Widya.
+      </div>
+      <div class="ref-item">
+        <strong>Mahsun, M.S.</strong> (2014). <em>Teks dalam Pembelajaran Bahasa Indonesia Kurikulum 2013.</em> Jakarta: PT Raja Grafindo Persada.
+      </div>
+      <div class="ref-item">
+        <strong>Pardiyono.</strong> (2007). <em>Pasti Bisa! Teaching Genre-Based Writing.</em> Yogyakarta: Penerbit Andi.
+      </div>
+      <div class="ref-item">
+        <strong>Priyatni, E.T.</strong> (2014). <em>Desain Pembelajaran Bahasa Indonesia dalam Kurikulum 2013.</em> Jakarta: Bumi Aksara.
+      </div>
+      <div class="ref-item">
+        <strong>Knapp, P. & Watkins, M.</strong> (2005). <em>Genre, Text, Grammar: Technologies for Teaching and Assessing Writing.</em> Sydney: University of New South Wales Press.
+      </div>
+      <div class="ref-item">
+        <strong>Sumber Gambar:</strong> Unsplash.com — Foto-foto fenomena alam diambil dari platform gambar bebas royalti Unsplash dengan lisensi Unsplash License.
+      </div>
+      <div class="ref-item">
+        <strong>Logo Universitas:</strong> Wikimedia Commons — Logo Universitas Sarjanawiyata Tamansiswa Yogyakarta.
+      </div>
+    </div>
+
+    <div style="margin-top: 3rem; background: var(--krem-gelap); border-radius: 8px; padding: 2rem; border: 1px solid #d4c5a0; text-align: center;" class="reveal">
+      <div style="font-family: 'Playfair Display', serif; color: var(--hijau-tua); font-size: 1.1rem; margin-bottom: 0.5rem;">Disusun oleh Mahasiswa</div>
+      <div style="font-size: 1.3rem; font-family: 'Playfair Display', serif; color: var(--coklat); font-weight: 700; margin-bottom: 0.3rem;">Universitas Sarjanawiyata Tamansiswa</div>
+      <div style="font-size: 0.9rem; color: #888; font-style: italic;">Jl. Kusumanegara No.157, Muja-Muju, Kec. Umbulharjo, Kota Yogyakarta, D.I. Yogyakarta</div>
+      <div style="margin-top: 1rem; display: flex; justify-content: center;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Logo_UST.png/240px-Logo_UST.png"
+             alt="Logo UST"
+             style="height: 80px; border-radius: 50%; border: 3px solid var(--emas);"
+             onerror="this.src='https://via.placeholder.com/80x80/1a4731/c9a84c?text=UST'"/>
+      </div>
+      <div style="margin-top: 1rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--hijau-mid); letter-spacing: 0.1em; text-transform: uppercase;">
+        Program Studi Pendidikan Bahasa Indonesia
+      </div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #aaa; margin-top: 0.3rem;">
+        Ing Ngarso Sung Tulodho · Ing Madyo Mangun Karso · Tut Wuri Handayani
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo-area">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Logo_UST.png/240px-Logo_UST.png"
+         alt="Logo UST"
+         onerror="this.src='https://via.placeholder.com/56x56/1a4731/c9a84c?text=UST'"/>
+  </div>
+  <h3>Pembelajaran Teks Eksplanasi</h3>
+  <p>Mata Pelajaran Bahasa Indonesia | Kurikulum Merdeka</p>
+  <p>Universitas Sarjanawiyata Tamansiswa, Yogyakarta</p>
+  <p class="copy">
+    &copy; 2025 Mahasiswa Universitas Sarjanawiyata Tamansiswa &nbsp;|&nbsp;
+    Media Pembelajaran Bahasa Indonesia &nbsp;|&nbsp;
+    Semua referensi diambil dari sumber terpercaya
+  </p>
+</footer>
+
+<!-- BACK TO TOP -->
+<a href="#" class="back-top" id="backTop">↑</a>
+
+<script>
+  // ===== PROGRESS BAR =====
+  window.addEventListener('scroll', () => {
+    const scrollTop = document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progress = (scrollTop / docHeight) * 100;
+    document.getElementById('progressBar').style.width = progress + '%';
+
+    const backTop = document.getElementById('backTop');
+    if (scrollTop > 400) backTop.classList.add('show');
+    else backTop.classList.remove('show');
+  });
+
+  // ===== REVEAL ON SCROLL =====
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // ===== TABS CONTOH =====
+  function showTab(id) {
+    document.querySelectorAll('.contoh-content').forEach(c => c.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // ===== CEK JAWABAN =====
+  function cekJawaban(nomor, benar, penjelasan) {
+    const selected = document.querySelector(`input[name="s${nomor}"]:checked`);
+    const hasilEl = document.getElementById('hasil' + nomor);
+    if (!selected) {
+      hasilEl.className = 'hasil salah';
+      hasilEl.textContent = '⚠ Pilih salah satu jawaban terlebih dahulu!';
+      return;
+    }
+    if (selected.value === benar) {
+      hasilEl.className = 'hasil benar';
+      hasilEl.textContent = '✓ Benar! ' + penjelasan;
+    } else {
+      hasilEl.className = 'hasil salah';
+      hasilEl.textContent = '✗ Kurang tepat. ' + penjelasan;
+    }
+  }
+
+  // ===== SMOOTH SCROLL FOR NAV =====
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
